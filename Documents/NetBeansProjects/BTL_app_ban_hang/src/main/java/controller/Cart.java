@@ -27,7 +27,7 @@ public class Cart {
         } else if (product.getQuantity() > product.getStock()) {
             JOptionPane.showMessageDialog(null, "Số lượng vượt quá hàng tồn kho!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } else {
-//Them     // Kiểm tra xem sản phẩm đã được thêm vào trước hay chưa
+     // Kiểm tra xem sản phẩm đã được thêm vào trước hay chưa
             boolean check = false;
             for(Product e : products){
                 if(e.getName().compareTo(product.getName())==0){
@@ -38,7 +38,9 @@ public class Cart {
                     break;
                 }
             }
+            // Nếu sản phẩm chưa được thêm thì tạo mới
             if(!check) products.add(product);
+            // Sắp xếp sản phẩm theo giá tăng dần
             Collections.sort(products, Comparator.comparingDouble(Product::getPrice));
             JOptionPane.showMessageDialog(null, "Sản phẩm đã được thêm vào giỏ hàng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
