@@ -5,6 +5,8 @@ import model.PurchaseHistory;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Cart {
@@ -25,11 +27,23 @@ public class Cart {
         } else if (product.getQuantity() > product.getStock()) {
             JOptionPane.showMessageDialog(null, "Số lượng vượt quá hàng tồn kho!", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } else {
-            products.add(product);
+//Them     // Kiểm tra xem sản phẩm đã được thêm vào trước hay chưa
+            boolean check = false;
+            for(Product e : products){
+                if(e.getName().compareTo(product.getName())==0){
+                    check = true;
+                    int t = e.getQuantity();
+                    products.remove(e);
+                    products.add(new Product(product.getName(),product.getPrice(),product.getQuantity()+t,product.getSize(),product.getStock(),product.getImagePath()));
+                    break;
+                }
+            }
+            if(!check) products.add(product);
+            Collections.sort(products, Comparator.comparingDouble(Product::getPrice));
             JOptionPane.showMessageDialog(null, "Sản phẩm đã được thêm vào giỏ hàng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
+    
     // Tính tổng tiền trong giỏ hàng
     public double calculateTotal() {
         double total = 0;
