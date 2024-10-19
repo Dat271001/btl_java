@@ -1,3 +1,4 @@
+
 package model;
 
 public class Product {
@@ -17,7 +18,6 @@ public class Product {
         this.stock = stock; // Khởi tạo số lượng tồn kho
         this.imagePath = imagePath; // Khởi tạo đường dẫn hình ảnh
     }
-
     // Getter và Setter cho các thuộc tính
     public String getName() {
         return name;
@@ -30,7 +30,9 @@ public class Product {
     public double getPrice() {
         return price;
     }
-
+    public double Getprice(){
+        return price * -1;
+    }
     public void setPrice(double price) {
         this.price = price;
     }
