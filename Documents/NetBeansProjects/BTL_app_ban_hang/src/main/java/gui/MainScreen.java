@@ -1,5 +1,5 @@
-package gui;
 
+package gui;
 import controller.Cart;
 import controller.ProductManager;
 import controller.UserManager;
@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.table.DefaultTableModel;
-
-public class MainScreen extends JFrame {
+public class MainScreen extends javax.swing.JFrame {
     private User user;
     private UserManager userManager;
     private Cart cart;
@@ -28,7 +27,7 @@ public class MainScreen extends JFrame {
     private JTextField searchField;
     private DefaultTableModel tableModel; // Sử dụng DefaultTableModel để quản lý bảng
 
-    public MainScreen(User user, UserManager userManager) {
+     public MainScreen(User user, UserManager userManager) {
         this.user = user;
         this.userManager = userManager;
         this.productManager = new ProductManager(); // Khởi tạo danh sách sản phẩm
@@ -36,7 +35,7 @@ public class MainScreen extends JFrame {
         this.cart = new Cart();  // Khởi tạo giỏ hàng cho người dùng
 
         setTitle("Main Screen - Welcome " + user.getUsername());
-        setSize(600, 500);
+        setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -122,14 +121,16 @@ public class MainScreen extends JFrame {
         JButton checkoutButton = new JButton("Checkout");
         
         // Thêm các nút sắp xếp
-        JButton sortPriceButton = new JButton("Sort by Price");
+        JButton sortPriceButton1 = new JButton("Sort by Price ↑ ");//Them
+        JButton sortPriceButton2 = new JButton("Sort by Price ↓ ");//Them
         JButton sortQuantityButton = new JButton("Sort by Quantity");
         JButton sellProductButton = new JButton("Sell Product");
         
         buttonPanel.add(sellProductButton);
         buttonPanel.add(addToCartButton);
         buttonPanel.add(checkoutButton);
-        buttonPanel.add(sortPriceButton);
+        buttonPanel.add(sortPriceButton1);//Them
+        buttonPanel.add(sortPriceButton2);//Them
         buttonPanel.add(sortQuantityButton);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -146,19 +147,22 @@ public class MainScreen extends JFrame {
 
             updateProductTable(filteredProducts);  // Cập nhật bảng với sản phẩm tìm thấy
         });
-
-        // Thêm sự kiện sắp xếp theo giá
-        sortPriceButton.addActionListener(e -> {
+        // Thêm sự kiện sắp xếp theo giá tăng dần
+        sortPriceButton1.addActionListener(e -> {
             Collections.sort(products, Comparator.comparingDouble(Product::getPrice));
             updateProductTable(products);  // Cập nhật bảng sau khi sắp xếp
         });
-
+        //Thêm sự kiện sắp xếp theo giá giảm dần
+        sortPriceButton2.addActionListener(e -> {
+            Collections.sort(products, Comparator.comparingDouble(Product::Getprice));
+            updateProductTable(products);  // Cập nhật bảng sau khi sắp xếp
+        });
         // Thêm sự kiện sắp xếp theo số lượng
         sortQuantityButton.addActionListener(e -> {
             Collections.sort(products, Comparator.comparingInt(Product::getQuantity));
             updateProductTable(products);  // Cập nhật bảng sau khi sắp xếp
         });
-
+        
         // Sự kiện khi nhấn nút "Sell Product"
         sellProductButton.addActionListener(e -> {
             String productName = JOptionPane.showInputDialog("Enter product name:");
@@ -184,11 +188,18 @@ public class MainScreen extends JFrame {
                 String size = (String) productTable.getValueAt(selectedRow, 3);
                 int quantity = (int) productTable.getValueAt(selectedRow, 4);
 
-                // Kiểm tra số lượng có đủ không
+// Thêm         // Kiểm tra số lượng có đủ không
                 if (quantity > 0) {
-                    cart.addProduct(new Product(productName, price, 1, size, 1, null));  // Thêm sản phẩm vào giỏ hàng
+                    // Nhập số lượng cần mua
+                    int t = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity:"));
+                    // Kiểm tra xem số lượng sản phẩm mua có hợp lệ hay không
+                    while(t>quantity) {
+                        JOptionPane.showInputDialog("The quantity of imported products is invalid.");
+                        t = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity:"));
+                    }
+                    cart.addProduct(new Product(productName, price, t, size, quantity, null));  // Thêm sản phẩm vào giỏ hàng
                     JOptionPane.showMessageDialog(null, "Product added to cart!");
-                    products.get(selectedRow).setQuantity(quantity - 1);  // Giảm số lượng trong danh sách sản phẩm
+                    products.get(selectedRow).setQuantity(quantity - t);  // Giảm số lượng trong danh sách sản phẩm
                     updateProductTable(products);  // Cập nhật lại bảng sản phẩm
                 } else {
                     JOptionPane.showMessageDialog(null, "Product is out of stock!");
@@ -230,8 +241,7 @@ public class MainScreen extends JFrame {
             });
         }
     }
-
-       private void updateProductTable(ArrayList<Product> filteredProducts) {
+    private void updateProductTable(ArrayList<Product> filteredProducts) {
         tableModel.setRowCount(0);  // Xóa tất cả hàng trong bảng
         for (Product product : filteredProducts) {
             tableModel.addRow(new Object[]{
@@ -243,6 +253,25 @@ public class MainScreen extends JFrame {
             });
         }
     }
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
     private ArrayList<Product> createProductList() {
         ArrayList<Product> productList = new ArrayList<>();
@@ -251,13 +280,13 @@ public class MainScreen extends JFrame {
         productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
         return productList;
     }
-
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             User testUser = new User("testUser", "password", 100.00);
             UserManager userManager = new UserManager();
             new MainScreen(testUser, userManager);
         });
     }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
 }
-
