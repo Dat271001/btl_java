@@ -23,9 +23,9 @@ public class duancuahang {
     public static MainScreen mainScreen;
     public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
-//        login = new LoginForm();
+       login = new LoginForm();
         userManager = new UserManager();
-        mainScreen = new MainScreen(new User("test","test",1000.0), userManager);
+        // mainScreen = new MainScreen(new User("test","test",1000.0), userManager);
     }
     
 }
