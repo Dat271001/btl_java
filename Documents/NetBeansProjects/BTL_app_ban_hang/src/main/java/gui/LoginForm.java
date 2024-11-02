@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package gui;
-
-
 //import java.awt.Color;
 import controller.*;
 import gui.*;
@@ -12,15 +7,10 @@ import java.awt.*;
 import java.awt.HeadlessException;
 import javax.swing.*;
 import duancuahang1.*;
-import static duancuahang1.duancuahang.userManager;
+import static duancuahang1.duancuahang.*;
 import java.io.File;
-import model.User;
-//import javax.swing.JPanel;
-
-/**
- *
- * @author PC
- */
+import java.io.IOException;
+import model.*;
 public class LoginForm extends JFrame{
     JLabel image;
     JPanel loginForm;
@@ -137,33 +127,27 @@ public class LoginForm extends JFrame{
         loginButton.addActionListener(e ->{
             String username = userNameField.getText();
             String pass = new String(passwordField.getPassword());
-//            System.out.println(username + " -- " + pass);
-            
             boolean checkFlag = duancuahang.userManager.PasswordCheck(username, pass);
-            if(checkFlag) {
-                JOptionPane.showMessageDialog(null, "Login successful!");
+            boolean check = duancuahang.userManager.AdminCheck(username, pass);;
+            if(checkFlag&&!check) {
+                JOptionPane.showMessageDialog(null, "Login user successful!");
 //                String info = duancuahang.userManager.GetInfo(username);
 //                System.out.println(info);
                 User user= userManager.GetUser(username);
                 duancuahang.mainScreen = new MainScreen(user, userManager);
                 this.dispose();
             }
-            else JOptionPane.showMessageDialog(null, "Invalid username or password!");
-            
-            
-//            BTL_Java.mainScreen.setInfo(BTL_Java.accountProcess.GetInfo(username));
-//            System.out.println(BTL_Java.accountProcess.GetInfo(username));
-            
-            
-            
-        });
-        
-        
-    }
-    
-    
-    
-    
-    
-    
+            else{
+            if(check) {
+                JOptionPane.showMessageDialog(null, "Login admin successful!");
+//                String info = duancuahang.userManager.GetInfo(username);
+//                System.out.println(info);
+                User user= userManager.GetUser(username);
+                duancuahang.mainScreenAdmin = new MainScreenAdmin(user, userManager);
+                this.dispose();
+            }
+            else JOptionPane.showMessageDialog(null, "Invalid username or password!"); 
+            }
+        });   
+    }  
 }

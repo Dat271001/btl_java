@@ -8,10 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class PurchaseHistoryScreen extends JFrame {
+public class Statistics extends JFrame {
     private Cart cart;
 
-    public PurchaseHistoryScreen(Cart cart) {
+    public Statistics(Cart cart) {
         this.cart = cart;
 
         setTitle("Purchase History");
