@@ -1,4 +1,4 @@
-a a 200
-thai thai 150
+a a 20.03
+thai thai 110.2
 test 12345 1000
-Admin 1234 0
+Admin 1234 219.76999999999998
