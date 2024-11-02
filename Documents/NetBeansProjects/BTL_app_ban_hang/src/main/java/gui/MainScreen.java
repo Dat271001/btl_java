@@ -175,7 +175,13 @@ public class MainScreen extends javax.swing.JFrame {
         
         // Tạo bảng sản phẩm với DefaultTableModel
         String[] columnNames = {"Product Image", "Product Name", "Price", "Size", "Quantity"};
-        tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0){
+        @Override
+          public boolean isCellEditable(int row, int column) {
+        // Trả về false để không cho phép sửa ô nào trong bảng
+        return false;
+        }
+        };
         productTable = new JTable(tableModel);
         productTable.setRowHeight(40);
         productTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));

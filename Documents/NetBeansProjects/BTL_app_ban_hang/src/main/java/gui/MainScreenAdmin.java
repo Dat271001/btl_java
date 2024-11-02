@@ -77,7 +77,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         depositMenu.setForeground(Color.white);
         depositMenu.add(depositItem);
 
-        // Tạo menu Lịch sử mua hàng
+        // Tạo menu thống kê
         JMenu purchaseHistoryMenu = new JMenu("Thống kê");
         JMenuItem purchaseHistoryItem = new JMenuItem("Xem số sẩn phẩm đã bán");
         purchaseHistoryItem.addActionListener(e -> {
@@ -142,7 +142,13 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         // Tạo bảng sản phẩm với DefaultTableModel
         String[] columnNames = {"Product Image", "Product Name", "Price", "Size", "Quantity"};
         tableModel = new DefaultTableModel(columnNames, 0);
-        productTable = new JTable(tableModel);
+        productTable = new JTable(tableModel){
+        @Override
+          public boolean isCellEditable(int row, int column) {
+        // Trả về false để không cho phép sửa ô nào trong bảng
+        return false;
+        }
+        };
         productTable.setRowHeight(40);
         productTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         JTableHeader header = productTable.getTableHeader();
