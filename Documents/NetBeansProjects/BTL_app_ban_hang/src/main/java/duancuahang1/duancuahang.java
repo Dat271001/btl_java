@@ -9,18 +9,12 @@ import gui.*;
 import java.io.FileNotFoundException;
 import model.User;
 
-/**
- *
- * @author Dell
- */
 public class duancuahang {
 
-    /**
-     * @param args the command line arguments
-     */
     public static LoginForm login;
     public static UserManager userManager;
     public static MainScreen mainScreen;
+    public static MainScreenAdmin mainScreenAdmin;
     public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
        login = new LoginForm();
