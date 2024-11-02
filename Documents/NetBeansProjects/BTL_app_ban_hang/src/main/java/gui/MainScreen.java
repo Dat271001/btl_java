@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -346,8 +346,8 @@ public class MainScreen extends javax.swing.JFrame {
                 if (user.deductBalance(totalAmount)) {
                     cart.checkout();  // Cập nhật lịch sử mua hàng
                     JOptionPane.showMessageDialog(null, "Checkout successful! Total: $" + totalAmount);
-//                    balanceLabel.setText("Balance: $" + user.getBalance());  // Cập nhật số dư
                     depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
+                    updateBalanceToFile(user.getUsername(),user.getPassword(),user.getBalance(), "src\\main\\java\\controller\\Accs.txt",totalAmount);
                 } else {
                     JOptionPane.showMessageDialog(null, "Not enough balance for checkout!");
                 }
@@ -358,6 +358,33 @@ public class MainScreen extends javax.swing.JFrame {
 
         this.add(mainPanel);
         setVisible(true);
+    }
+    private void updateBalanceToFile(String name,String pass,double newBalance, String fileName,double total) {
+        ArrayList<String> lines = new ArrayList<>();
+        String s = name +" "+pass;
+        File accountFile = new File(new File("src\\main\\java\\controller\\Accs.txt").getAbsolutePath());
+        try{
+            Scanner sc = new Scanner(accountFile);
+            while(sc.hasNextLine()){
+                String x = sc.nextLine();
+                if(x.startsWith("Admin 1234")) {
+                    String[]w = x.split("[' ']+");
+                    x = w[0]+" "+w[1]+" "+Double.toString(Double.parseDouble(w[2])+total);
+                }
+                if(x.startsWith(s)) x= s + " "+Double.toString(newBalance);
+                lines.add(x);
+            }
+            sc.close();
+        }catch(FileNotFoundException e){
+        }
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+        for (String line : lines) {
+            writer.write(line);
+            writer.newLine();
+        }
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
     }
 
     private void updateProductTable() {
