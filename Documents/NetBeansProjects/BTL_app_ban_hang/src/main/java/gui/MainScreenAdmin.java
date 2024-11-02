@@ -13,8 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -234,7 +233,12 @@ public class MainScreenAdmin extends javax.swing.JFrame {
             double price = Double.parseDouble(JOptionPane.showInputDialog("Enter price:"));
             int stock = Integer.parseInt(JOptionPane.showInputDialog("Enter stock:"));
             String imagePath = JOptionPane.showInputDialog("Enter image path:");
-
+            try (PrintWriter printWriter = new PrintWriter(new FileWriter("src\\main\\java\\gui\\Product.txt", true))) {
+                 String s = productName+" "+Double.toString(price)+" "+ Integer.toString(quantity)+" "+ size +" "+ Integer.toString(stock)+" "+ imagePath;
+                 printWriter.println(s);
+            }catch(IOException ex){
+                
+            }
             Product product = new Product(productName, price, quantity, size, stock, imagePath);
             productManager.addProduct(user, product);
             products.add(product);  // Thêm sản phẩm mới vào danh sách sản phẩm

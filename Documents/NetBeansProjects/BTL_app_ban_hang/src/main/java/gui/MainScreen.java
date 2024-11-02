@@ -14,9 +14,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Scanner;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 public class MainScreen extends javax.swing.JFrame {
@@ -398,36 +400,17 @@ public class MainScreen extends javax.swing.JFrame {
 
     private ArrayList<Product> createProductList() {
         ArrayList<Product> productList = new ArrayList<>();
-        productList.add(new Product("T-shirt", 19.99, 10, "M", 10, "path/to/image1.jpg"));
-        productList.add(new Product("Jeans", 39.99, 5, "L", 5, "path/to/image2.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
-        productList.add(new Product("Sneakers", 59.99, 3, "42", 3, "path/to/image3.jpg"));
+        File accountFile = new File(new File("src\\main\\java\\gui\\Product.txt").getAbsolutePath());
+        try{
+            Scanner sc = new Scanner(accountFile);
+            while(sc.hasNextLine()){
+                String s = sc.nextLine();
+                String[]w = s.split("[' ']+");
+                productList.add(new Product(w[0],Double.parseDouble(w[1]),Integer.parseInt(w[2]), w[3],Integer.parseInt(w[4]),w[5]));
+            }
+            sc.close();
+        }catch(FileNotFoundException e){
+        }
         return productList;
     }
 //     public static void main(String[] args) {
