@@ -9,7 +9,6 @@ import model.User;
 
 import java.util.HashMap;
 import java.util.Scanner;
-
 public class UserManager {
     private HashMap<String, User> users;
 //    ArrayList<User> accList = new ArrayList<>();
@@ -24,7 +23,9 @@ public class UserManager {
             String[] tmpList = tmp.trim().split("\\s+"); 
 //            User tmpAcc = new User(tmpList[0], tmpList[1], 1000.0);
 //            accList.add(tmpAcc);
-            if(!tmpList[0].isBlank() && !tmpList[1].isBlank()) users.put(tmpList[0], new User(tmpList[0], tmpList[1], 1000.0));
+            if(!tmpList[0].isBlank() && !tmpList[1].isBlank()) 
+                if(tmpList[0].compareTo("Admin")==0&&tmpList[1].compareTo("1234")==0) users.put(tmpList[0], new User(tmpList[0], tmpList[1],Integer.parseInt(tmpList[2])));
+                else users.put(tmpList[0], new User(tmpList[0], tmpList[1],Integer.parseInt(tmpList[2])));
         }
         sn.close();
     }
@@ -50,7 +51,10 @@ public class UserManager {
         }
         return false;
     }
-    
+    public boolean AdminCheck(String username,String pass){
+        if(username.compareTo("Admin")==0&&pass.compareTo("1234")==0) return true;
+        return false;
+    }
     // Check nguoi dung
     public boolean AccountCheck(String username, String pass){
         if(username.isBlank()) return false;

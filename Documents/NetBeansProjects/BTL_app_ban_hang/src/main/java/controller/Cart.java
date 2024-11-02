@@ -71,7 +71,6 @@ public class Cart {
             JOptionPane.showMessageDialog(null, "Giỏ hàng trống!", "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
     }
-
     // Xóa sản phẩm khỏi giỏ hàng với xác nhận từ người dùng
     public void removeProduct(Product product) {
         int response = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?", "Xác nhận", JOptionPane.YES_NO_OPTION);
@@ -104,7 +103,6 @@ public class Cart {
         }
         return purchasedProducts; // Trả về danh sách tất cả sản phẩm đã mua
     }
-
     // Lấy tổng số sản phẩm đã bán
     public int getTotalProductsSold() {
         return purchaseHistories.stream()
