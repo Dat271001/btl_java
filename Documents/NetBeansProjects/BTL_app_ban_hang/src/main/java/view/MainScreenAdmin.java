@@ -1,14 +1,14 @@
 
-package view;
+package gui;
 import controller.Cart;
 import controller.ProductManager;
 import controller.UserManager;
-import duancuahang1.main;
+import duancuahang1.duancuahang;
 import model.Product;
 import model.*;
 import model.PurchaseHistory;
 
-import static duancuahang1.main.userManager;
+import static duancuahang1.duancuahang.userManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -69,13 +69,13 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         accountMenu.add(accountItem);
         // Tạo menu Nạp tiền
         JMenu depositMenu = new JMenu("Số dư hiện tại: " + user.getBalance()+"$");
-        JMenuItem depositItem = new JMenuItem("Nạp tiền");
-        depositItem.addActionListener(e -> {
-            QRCodeScreen qrCodeScreen = new QRCodeScreen(user);
-            qrCodeScreen.setVisible(true);
-        });
+//        JMenuItem depositItem = new JMenuItem("Nạp tiền");
+//        depositItem.addActionListener(e -> {
+//            QRCodeScreen qrCodeScreen = new QRCodeScreen(user);
+//            qrCodeScreen.setVisible(true);
+//        });
         depositMenu.setForeground(Color.white);
-        depositMenu.add(depositItem);
+//        depositMenu.add(depositItem);
 
          // Tạo menu thống kê
         JMenu purchaseHistoryMenu = new JMenu("Thống kê");

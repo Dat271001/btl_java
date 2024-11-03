@@ -1,12 +1,13 @@
 
-package view;
+package gui;
 //import java.awt.Color;
 import controller.*;
+import gui.*;
 import java.awt.*;
 import java.awt.HeadlessException;
 import javax.swing.*;
 import duancuahang1.*;
-import static duancuahang1.main.*;
+import static duancuahang1.duancuahang.*;
 import java.io.File;
 import java.io.IOException;
 import model.*;
@@ -126,14 +127,14 @@ public class LoginForm extends JFrame{
         loginButton.addActionListener(e ->{
             String username = userNameField.getText();
             String pass = new String(passwordField.getPassword());
-            boolean checkFlag = main.userManager.PasswordCheck(username, pass);
-            boolean check = main.userManager.AdminCheck(username, pass);;
+            boolean checkFlag = duancuahang.userManager.PasswordCheck(username, pass);
+            boolean check = duancuahang.userManager.AdminCheck(username, pass);;
             if(checkFlag&&!check) {
                 JOptionPane.showMessageDialog(null, "Login user successful!");
 //                String info = duancuahang.userManager.GetInfo(username);
 //                System.out.println(info);
                 User user= userManager.GetUser(username);
-                main.mainScreen = new MainScreen(user, userManager);
+                duancuahang.mainScreen = new MainScreen(user, userManager);
                 this.dispose();
             }
             else{
@@ -142,7 +143,7 @@ public class LoginForm extends JFrame{
 //                String info = duancuahang.userManager.GetInfo(username);
 //                System.out.println(info);
                 User user= userManager.GetUser(username);
-                main.mainScreenAdmin = new MainScreenAdmin(user, userManager);
+                duancuahang.mainScreenAdmin = new MainScreenAdmin(user, userManager);
                 this.dispose();
             }
             else JOptionPane.showMessageDialog(null, "Invalid username or password!"); 

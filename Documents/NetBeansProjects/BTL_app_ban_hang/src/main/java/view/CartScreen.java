@@ -1,4 +1,4 @@
-package view;
+package gui;
 
 import controller.Cart;
 import model.Product;

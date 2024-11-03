@@ -1,5 +1,7 @@
 
-package view;
+
+
+package gui;
 
 import controller.UserManager;
 import model.User;
@@ -49,16 +51,20 @@ public class QRCodeScreen extends JFrame {
 
         // Thêm combo box chọn số tiền
         JLabel amountLabel = new JLabel("Deposit Amount:");
-        JComboBox<String> amountComboBox = new JComboBox<>(new String[]{"100000", "200000", "500000", "1000000"});
+        JComboBox<String> amountComboBox = new JComboBox<>(new String[]{"100", "200", "500", "1000"});
         inputPanel.add(amountLabel);
         inputPanel.add(amountComboBox);
+        
+        
+        
 
         // Thêm nút xác nhận nạp
-        JButton confirmButton = new JButton("Confirm Deposit");
-        confirmButton.addActionListener(e -> {
         String selectedBank = (String) bankComboBox.getSelectedItem();
         String accountNumber = accountField.getText();
         String depositAmount = (String) amountComboBox.getSelectedItem();
+        JButton confirmButton = new JButton("Confirm Deposit");
+        confirmButton.addActionListener(e -> {
+        
         
         
         if (accountNumber.isEmpty()) {
@@ -78,8 +84,32 @@ public class QRCodeScreen extends JFrame {
         mainPanel.add(inputPanel, BorderLayout.CENTER);
         add(mainPanel);
         setVisible(true);
-
-
+        // Cập nhật lại số tiền sau khi nạp
+        user.addBalance(Double.parseDouble(depositAmount));
+        ArrayList<String> lines = new ArrayList<>();
+        File accountFile = new File(new File("src\\main\\java\\controller\\Accs.txt").getAbsolutePath());
+        try{
+        Scanner sn = new Scanner(accountFile);
+        while(sn.hasNextLine()){
+            String tmp = sn.nextLine();
+            if(tmp.startsWith(user.getUsername()+" "+user.getPassword())){
+                tmp = user.getUsername()+" "+user.getPassword()+" "+Double.toString(user.getBalance());
+            }
+            lines.add(tmp);
+        }
+        sn.close();
+        }catch(FileNotFoundException ex){
+            
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\java\\controller\\Accs.txt"))) {
+        for (String line : lines) {
+            writer.write(line);
+            writer.newLine();
+        }
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        
         // Thêm mã QR
         JLabel qrLabel = new JLabel(new ImageIcon("src\\main\\java\\img\\QR code.jpg")); // Đường dẫn đến ảnh mã QR của bạn
         mainPanel.add(qrLabel, BorderLayout.CENTER);
@@ -88,7 +118,3 @@ public class QRCodeScreen extends JFrame {
         setVisible(true);
     }
 }
-
-
-
-

@@ -1,18 +1,18 @@
 
-package view;
+package gui;
 import controller.Cart;
 import controller.ProductManager;
 import controller.UserManager;
-import duancuahang1.main;
+import duancuahang1.duancuahang;
 import model.Product;
 import model.User;
 import model.PurchaseHistory;
 
-import static duancuahang1.main.userManager;
+import static duancuahang1.duancuahang.userManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ActionListener; 
 import java.io.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -84,10 +84,14 @@ public class MainScreen extends javax.swing.JFrame {
         depositItem.addActionListener(e -> {
             QRCodeScreen qrCodeScreen = new QRCodeScreen(user);
             qrCodeScreen.setVisible(true);
+            
+            // Khi QRCodeScreen đóng, cập nhật lại text của depositMenu
+            depositMenu.setText("$: " + user.getBalance());
         });
+        
         depositMenu.setForeground(Color.white);
         depositMenu.add(depositItem);
-
+        
         // Tạo menu Lịch sử mua hàng
         JMenu purchaseHistoryMenu = new JMenu("Lịch sử mua hàng");
         JMenuItem purchaseHistoryItem = new JMenuItem("Xem Lịch sử mua hàng");
@@ -280,83 +284,82 @@ public class MainScreen extends javax.swing.JFrame {
         // Thêm sự kiện sắp xếp theo giá tăng dần
         sortPriceButton1.addActionListener(e -> {
             Collections.sort(products, Comparator.comparingDouble(Product::getPrice));
-            updateProductTable(products);  // Cập nhật bảng sau khi sắp xếp
+            updateProductTable(products);  
         });
         //Thêm sự kiện sắp xếp theo giá giảm dần
         sortPriceButton2.addActionListener(e -> {
             Collections.sort(products, Comparator.comparingDouble(Product::Getprice));
-            updateProductTable(products);  // Cập nhật bảng sau khi sắp xếp
+            updateProductTable(products);  
         });
         // Thêm sự kiện sắp xếp theo số lượng
         sortQuantityButton.addActionListener(e -> {
             Collections.sort(products, Comparator.comparingInt(Product::getQuantity));
-            updateProductTable(products);  // Cập nhật bảng sau khi sắp xếp
+            updateProductTable(products);
         });
-       // Thêm sự kiện cho giỏ hàng
-addToCartButton.addActionListener(e -> {
-    int selectedRow = productTable.getSelectedRow();
-    if (selectedRow != -1) {
-        String productName = (String) productTable.getValueAt(selectedRow, 1);
-        double price = (double) productTable.getValueAt(selectedRow, 2);
-        String size = (String) productTable.getValueAt(selectedRow, 3);
-        int quantity = (int) productTable.getValueAt(selectedRow, 4);
+        // Thêm sự kiện cho giỏ hàng
+        addToCartButton.addActionListener(e -> {
+            int selectedRow = productTable.getSelectedRow();
+            if (selectedRow != -1) {
+                String productName = (String) productTable.getValueAt(selectedRow, 1);
+                double price = (double) productTable.getValueAt(selectedRow, 2);
+                String size = (String) productTable.getValueAt(selectedRow, 3);
+                int quantity = (int) productTable.getValueAt(selectedRow, 4);
 
-        // Kiểm tra số lượng có đủ không
-        if (quantity > 0) {
-            // Nhập số lượng cần mua
-            int t = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity:"));
-            
-            // Kiểm tra xem số lượng sản phẩm mua có hợp lệ hay không
-            while (t > quantity || t <= 0) {
-                t = Integer.parseInt(JOptionPane.showInputDialog("The quantity of imported products is invalid. Enter again:"));
-            }
-            // Thêm sản phẩm vào giỏ hàng mà không giảm số lượng trong danh sách sản phẩm
-            cart.addProduct(new Product(productName, price, t, size, quantity, null));  
-            JOptionPane.showMessageDialog(null, "Product added to cart!");
-            updateProductTable(products);  // Cập nhật lại bảng sản phẩm
-        } else {
-            JOptionPane.showMessageDialog(null, "Product is out of stock!");
-        }
-    } else {
-        JOptionPane.showMessageDialog(null, "Please select a product!");
-    }
-});
-
-// Thêm sự kiện thanh toán
-checkoutButton.addActionListener(e -> {
-    double totalAmount = cart.calculateTotal();
-    if (totalAmount > 0) {
-        // Giảm số lượng sản phẩm trong danh sách khi thanh toán
-        for (Product product : cart.getProducts()) {
-            String productName = product.getName();
-            int quantityToDeduct = product.getQuantity();
-            for (Product p : products) {
-                if (p.getName().equals(productName)) {
-                    p.setQuantity(p.getQuantity() - quantityToDeduct);
-                    break;
+           // Kiểm tra số lượng có đủ không
+                if (quantity > 0) {
+                    // Nhập số lượng cần mua
+                    int t = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity:"));
+                    
+                    // Kiểm tra xem số lượng sản phẩm mua có hợp lệ hay không
+                    while(t>quantity) {
+                        JOptionPane.showInputDialog("The quantity of imported products is invalid.");
+                        t = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity:"));
+                    }
+                    cart.addProduct(new Product(productName, price, t, size, quantity, null));  // Thêm sản phẩm vào giỏ hàng
+                    JOptionPane.showMessageDialog(null, "Product added to cart!");
+                    products.get(selectedRow).setQuantity_Sold(t);  
+                    updateProductTable(products);  
+                } else {
+                    JOptionPane.showMessageDialog(null, "Product is out of stock!");
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a product!");
             }
-        }
+        });
 
-        if (user.deductBalance(totalAmount)) {
-            cart.checkout();  // Cập nhật lịch sử mua hàng
-            JOptionPane.showMessageDialog(null, "Checkout successful! Total: $" + totalAmount);             
-            depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư trên giao diện
-
-            try {
-                // Cộng số tiền bị trừ vào tài khoản Admin
-                userManager.addToAdminBalance(totalAmount);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error updating Admin balance in file.");
+        // Thêm sự kiện thanh toán
+        checkoutButton.addActionListener(e -> {
+            double totalAmount = cart.calculateTotal();
+            if (totalAmount > 0) {
+                if (user.deductBalance(totalAmount)) {
+                    cart.checkout();  // Cập nhật lịch sử mua hàng
+                    JOptionPane.showMessageDialog(null, "Checkout successful! Total: $" + totalAmount);
+                    depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
+                    updateBalanceToFile(user.getUsername(),user.getPassword(),user.getBalance(), "src\\main\\java\\controller\\Accs.txt",totalAmount);
+                    for(Product product: products){
+                        updateProduct("src\\main\\java\\gui\\Product.txt",product.getQuantity()-product.getQuantity_Sold(),product.getName());
+                    }
+                    products = new ArrayList<>();
+                    File accountFile = new File(new File("src\\main\\java\\gui\\Product.txt").getAbsolutePath());
+                    try{
+                        Scanner sc = new Scanner(accountFile);
+                        while(sc.hasNextLine()){
+                            String s = sc.nextLine();
+                            String[]w = s.split("[' ']+");
+                            products.add(new Product(w[0],Double.parseDouble(w[1]),Integer.parseInt(w[2]), w[3],Integer.parseInt(w[4]),w[5]));
+                            }
+                        sc.close();
+                    }catch(FileNotFoundException ex){
+                    }
+                    updateProductTable(products);
+                }else {
+                    JOptionPane.showMessageDialog(null, "Not enough balance for checkout!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Your cart is empty!");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Not enough balance for checkout!");
-        }
-    } else {
-        JOptionPane.showMessageDialog(null, "Your cart is empty!");
-    }
-});
+        });
+
         this.add(mainPanel);
         setVisible(true);
     }

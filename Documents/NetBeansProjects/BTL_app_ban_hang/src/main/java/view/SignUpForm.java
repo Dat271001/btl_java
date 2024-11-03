@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package view;
+package gui;
 
 import duancuahang1.*;
 import java.awt.*;
@@ -134,11 +134,11 @@ public class SignUpForm extends JFrame{
             String pass = passwordField.getText();
 //            System.out.println(username + " -- " + pass);
             
-            boolean checkFlag = main.userManager.AccountCheck(username, pass);
+            boolean checkFlag = duancuahang.userManager.AccountCheck(username, pass);
             if(checkFlag) JOptionPane.showMessageDialog(null, "Account existed!");
             else{
                 try {
-                    main.userManager.AddAccount(username, pass);
+                    duancuahang.userManager.AddAccount(username, pass);
                 } catch (IOException ex) {
 //                    Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
                 }

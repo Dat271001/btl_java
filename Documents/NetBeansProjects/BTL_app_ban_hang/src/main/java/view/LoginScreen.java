@@ -1,5 +1,3 @@
-package view;
-
 //package gui;
 //
 //import controller.UserManager;
