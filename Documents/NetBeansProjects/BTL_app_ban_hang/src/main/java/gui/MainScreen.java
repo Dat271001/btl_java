@@ -370,6 +370,14 @@ public class MainScreen extends javax.swing.JFrame {
         this.add(mainPanel);
         setVisible(true);
         
+        //Logout
+        logoutButton.addActionListener(e->{
+            System.out.println("LOGOUT");
+            this.dispose();
+//            new LoginForm();
+            duancuahang.login = new LoginForm();
+            
+        });
         //Listener for List
         // Get the selection model and set it to single selection mode
         ListSelectionModel selectionModel = productTable.getSelectionModel();

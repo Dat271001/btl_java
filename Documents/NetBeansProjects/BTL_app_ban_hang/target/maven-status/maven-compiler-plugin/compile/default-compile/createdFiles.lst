@@ -8,6 +8,7 @@ controller\NoScalingIcon.class
 duancuahang1\duancuahang.class
 model\Product.class
 gui\StatisticsScreen$1.class
+gui\MainScreenAdmin$2.class
 gui\Statistics.class
 model\User.class
 gui\CartScreen.class

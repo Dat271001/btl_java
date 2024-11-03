@@ -89,12 +89,26 @@ public class SignUpForm extends JFrame{
         passwordField.setSize(300, 35);
         passwordField.setLocation(50, 190);
         signUpForm.add(passwordField);
+        //Password Confirm
+        JLabel confirmTitle = new JLabel();
+        confirmTitle.setVisible(true);
+        confirmTitle.setSize(300, 20);
+        confirmTitle.setLocation(50, 230);
+        confirmTitle.setText("Confirm Password:");
+        confirmTitle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        signUpForm.add(confirmTitle);
+        
+        JTextField confirmField = new JTextField();
+        confirmField.setVisible(true);
+        confirmField.setSize(300, 35);
+        confirmField.setLocation(50, 250);
+        signUpForm.add(confirmField);
         
         //SignUp
         JButton signUpButton = new JButton();
         signUpButton.setVisible(true);
         signUpButton.setSize(300, 30);
-        signUpButton.setLocation(50, 240);
+        signUpButton.setLocation(50, 300);
         signUpButton.setText("Sign Up");
         signUpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         signUpForm.add(signUpButton);
@@ -104,7 +118,7 @@ public class SignUpForm extends JFrame{
         JLabel loginChangeTitle = new JLabel();
         loginChangeTitle.setVisible(true);
         loginChangeTitle.setSize(300, 20);
-        loginChangeTitle.setLocation(50, 300);
+        loginChangeTitle.setLocation(50, 330);
         loginChangeTitle.setText("Already have account?");
         loginChangeTitle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         loginChangeTitle.setHorizontalAlignment(JLabel.CENTER);
@@ -113,7 +127,7 @@ public class SignUpForm extends JFrame{
         JButton loginChangeButton = new JButton();
         loginChangeButton.setVisible(true);
         loginChangeButton.setSize(100, 30);
-        loginChangeButton.setLocation(150, 330);
+        loginChangeButton.setLocation(150, 360);
         loginChangeButton.setText("Log In");
         loginChangeButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         signUpForm.add(loginChangeButton);
