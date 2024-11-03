@@ -9,7 +9,7 @@ public class Product {
     private int stock; // Số lượng sản phẩm đã bán
     private String imagePath; // Đường dẫn tới hình ảnh sản phẩm
     private User seller; // Người bán của sản phẩm
-
+    private int quantity_sold;
     public Product(String name, double price, int quantity, String size, int stock, String imagePath) {
         this.name = name;
         this.price = price;
@@ -17,12 +17,13 @@ public class Product {
         this.size = size;
         this.stock = stock; // Khởi tạo số lượng tồn kho
         this.imagePath = imagePath; // Khởi tạo đường dẫn hình ảnh
+        this.quantity_sold=0;
     }
     // Getter và Setter cho các thuộc tính
     public String getName() {
         return name;
     }
-
+    
     public void setName(String name) {
         this.name = name;
     }
@@ -40,11 +41,15 @@ public class Product {
     public int getQuantity() {
         return quantity;
     }
-
+    public int getQuantity_Sold() {
+        return quantity_sold;
+    }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
+    public void setQuantity_Sold(int quantity) {
+        this.quantity_sold = quantity;
+    }
     public String getSize() {
         return size;
     }

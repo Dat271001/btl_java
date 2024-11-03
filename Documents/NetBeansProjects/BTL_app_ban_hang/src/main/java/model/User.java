@@ -44,12 +44,8 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone; // Setter cho số điện thoại
     }
-
     public void addBalance(double amount) {
         this.balance += amount; // Cộng số tiền vào số dư
-    }
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     public boolean deductBalance(double amount) {
