@@ -20,7 +20,7 @@ import javax.swing.*;
 public class SignUpForm extends JFrame{
     JLabel image;
     JPanel signUpForm;
-    ImageIcon logo = new ImageIcon(new File("src\\main\\java\\img\\Logo.jpg").getAbsolutePath());
+    Icon logo = new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\MainLogo.jpg").getAbsolutePath()) );
     
     public SignUpForm() throws HeadlessException {
 //        this.setVisible(true);
@@ -35,8 +35,8 @@ public class SignUpForm extends JFrame{
         image = new JLabel();
         image.setVisible(true);
 //        image.setText("JLabel");
-//        image.setBackground(Color.red);
-//        image.setOpaque(true);
+      image.setBackground(new Color(248, 87, 55));
+        image.setOpaque(true);
         image.setSize(400, 450);
         image.setLocation(0, 0);
         image.setIcon(logo);
@@ -90,11 +90,26 @@ public class SignUpForm extends JFrame{
         passwordField.setLocation(50, 190);
         signUpForm.add(passwordField);
         
+                //Password Confirm
+        JLabel confirmTitle = new JLabel();
+        confirmTitle.setVisible(true);
+        confirmTitle.setSize(300, 20);
+        confirmTitle.setLocation(50, 230);
+        confirmTitle.setText("Confirm Password:");
+        confirmTitle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        signUpForm.add(confirmTitle);
+        
+        JTextField confirmField = new JTextField();
+        confirmField.setVisible(true);
+        confirmField.setSize(300, 35);
+        confirmField.setLocation(50, 250);
+        signUpForm.add(confirmField);
+        
         //SignUp
         JButton signUpButton = new JButton();
         signUpButton.setVisible(true);
         signUpButton.setSize(300, 30);
-        signUpButton.setLocation(50, 240);
+        signUpButton.setLocation(50, 300);
         signUpButton.setText("Sign Up");
         signUpButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         signUpForm.add(signUpButton);
@@ -104,7 +119,7 @@ public class SignUpForm extends JFrame{
         JLabel loginChangeTitle = new JLabel();
         loginChangeTitle.setVisible(true);
         loginChangeTitle.setSize(300, 20);
-        loginChangeTitle.setLocation(50, 300);
+        loginChangeTitle.setLocation(50, 330);
         loginChangeTitle.setText("Already have account?");
         loginChangeTitle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         loginChangeTitle.setHorizontalAlignment(JLabel.CENTER);
@@ -113,7 +128,7 @@ public class SignUpForm extends JFrame{
         JButton loginChangeButton = new JButton();
         loginChangeButton.setVisible(true);
         loginChangeButton.setSize(100, 30);
-        loginChangeButton.setLocation(150, 330);
+        loginChangeButton.setLocation(150, 360);
         loginChangeButton.setText("Log In");
         loginChangeButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         signUpForm.add(loginChangeButton);
@@ -132,17 +147,21 @@ public class SignUpForm extends JFrame{
         signUpButton.addActionListener(e ->{
             String username = userNameField.getText();
             String pass = passwordField.getText();
+            String confirm = confirmField.getText();
 //            System.out.println(username + " -- " + pass);
-            
-            boolean checkFlag = duancuahang.userManager.AccountCheck(username, pass);
-            if(checkFlag) JOptionPane.showMessageDialog(null, "Account existed!");
-            else{
-                try {
-                    duancuahang.userManager.AddAccount(username, pass);
-                } catch (IOException ex) {
-//                    Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+            if(!pass.equals(confirm)){
+                JOptionPane.showMessageDialog(null, "Password does not match!");
+            } else{
+                boolean checkFlag = duancuahang.userManager.AccountCheck(username, pass);
+                if(checkFlag) JOptionPane.showMessageDialog(null, "Account existed!");
+                else{
+                    try {
+                        duancuahang.userManager.AddAccount(username, pass);
+                    } catch (IOException ex) {
+    //                    Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(null, "Sign Up successful!");
                 }
-                JOptionPane.showMessageDialog(null, "Sign Up successful!");
             }
         });
         

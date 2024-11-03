@@ -19,8 +19,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+class ImageRenderer extends DefaultTableCellRenderer {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        if (value instanceof JLabel) {
+            return (JLabel) value; // Display the JLabel with the ImageIcon
+        }
+        return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+    }
+}
+
 public class MainScreen extends javax.swing.JFrame {
     private User user;
     private UserManager userManager;
@@ -129,7 +141,7 @@ public class MainScreen extends javax.swing.JFrame {
 //        homePage.setVisible(true);
         homePage.setSize(100, 80);
         homePage.setLocation(50, 5);
-        ImageIcon logo = new ImageIcon(new File("src\\main\\java\\img\\icons8-home-screen-100.png").getAbsolutePath());
+        ImageIcon logo = new ImageIcon(new File("src\\main\\java\\img\\HomePageIcon.jpg").getAbsolutePath());
         homePage.setIcon(new controller.NoScalingIcon( logo ));
         homePage.setBorder(BorderFactory.createEmptyBorder());
         homePage.setBackground(lightOrange);
@@ -149,7 +161,7 @@ public class MainScreen extends javax.swing.JFrame {
         searchButton.setLocation(920, 20);
         searchButton.setBackground(Color.white);
         searchButton.setBorder(BorderFactory.createEmptyBorder());
-        searchButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\icons8-search-24.png").getAbsolutePath()) ) );
+        searchButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\SearchIcon.jpg").getAbsolutePath()) ) );
         searchPanel.add(searchButton);
         
         JButton cartButton = new JButton();
@@ -157,7 +169,7 @@ public class MainScreen extends javax.swing.JFrame {
         cartButton.setSize(100, 60);
         cartButton.setLocation(1040, 10);
         cartButton.setBackground(lightOrange);
-        cartButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\icons8-shopping-cart-50.png").getAbsolutePath()) ) );
+        cartButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\CartIcon.jpg").getAbsolutePath()) ) );
         cartButton.addActionListener(e -> {
             CartScreen cartScreen = new CartScreen(cart);
             cartScreen.setVisible(true);
@@ -183,7 +195,7 @@ public class MainScreen extends javax.swing.JFrame {
         }
         };
         productTable = new JTable(tableModel);
-        productTable.setRowHeight(40);
+        productTable.setRowHeight(150);
         productTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         JTableHeader header = productTable.getTableHeader();
 //        header.setFont(new Font("Segoe UI", Font.BOLD, 14);
@@ -425,26 +437,38 @@ public class MainScreen extends javax.swing.JFrame {
     private void updateProductTable() {
         tableModel.setRowCount(0);  // Xóa tất cả hàng trong bảng
         for (Product product : products) {
+            ImageIcon originalIcon = new ImageIcon(product.getImagePath());
+            Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(scaledImage);
+            
             tableModel.addRow(new Object[]{
-                null,  // Có thể thêm hình ảnh ở đây nếu cần
+//                null,  // Có thể thêm hình ảnh ở đây nếu cần
+                new JLabel(resizedIcon),
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),
                 product.getQuantity()
             });
         }
+//        tableModel.
+        productTable.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
     }
     private void updateProductTable(ArrayList<Product> filteredProducts) {
         tableModel.setRowCount(0);  // Xóa tất cả hàng trong bảng
         for (Product product : filteredProducts) {
+            ImageIcon originalIcon = new ImageIcon(product.getImagePath());
+            Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(scaledImage);
             tableModel.addRow(new Object[]{
-                null,  // Có thể thêm hình ảnh ở đây nếu cần
+//                null,  // Có thể thêm hình ảnh ở đây nếu cần
+                new JLabel(resizedIcon),
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),
                 product.getQuantity()
             });
         }
+        productTable.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -1,6 +1,8 @@
 
 package model;
 
+import java.io.File;
+
 public class Product {
     private String name;
     private double price;
@@ -16,7 +18,7 @@ public class Product {
         this.quantity = quantity;
         this.size = size;
         this.stock = stock; // Khởi tạo số lượng tồn kho
-        this.imagePath = imagePath; // Khởi tạo đường dẫn hình ảnh
+        this.imagePath = new File(imagePath).getAbsolutePath(); // Khởi tạo đường dẫn hình ảnh
     }
     // Getter và Setter cho các thuộc tính
     public String getName() {

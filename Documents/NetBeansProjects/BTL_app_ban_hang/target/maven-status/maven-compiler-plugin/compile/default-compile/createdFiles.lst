@@ -1,5 +1,7 @@
 controller\Cart.class
 gui\CartScreen.class
+gui\LoadingScreen.class
+gui\ImageRenderer.class
 controller\UserManager.class
 gui\PurchaseHistoryScreen.class
 gui\MainScreen$1.class
@@ -8,6 +10,7 @@ gui\QRCodeScreen.class
 gui\AccountScreen$1.class
 gui\SignUpForm.class
 gui\AccountScreen.class
+gui\CartScreen$1.class
 gui\MainScreenAdmin.class
 controller\NoScalingIcon.class
 duancuahang1\duancuahang.class
