@@ -334,7 +334,6 @@ public class MainScreen extends javax.swing.JFrame {
                     updateBalanceToFile(user.getUsername(),user.getPassword(),user.getBalance(), "src\\main\\java\\controller\\Accs.txt",totalAmount);
                     for(Product product: products){
                         updateProduct("src\\main\\java\\gui\\Product.txt",product.getQuantity(),product.getName());
-                        updateStatistics("src\\main\\java\\gui\\Statistics.txt",product.getName(),product.getQuantity(),product.getPrice(),product.getSize(),product.getImagePath(),product.getStock());
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Not enough balance for checkout!");
@@ -347,38 +346,7 @@ public class MainScreen extends javax.swing.JFrame {
         this.add(mainPanel);
         setVisible(true);
     }
-    private void updateStatistics(String fileName,String name,int quantity,double price,String size,String anh,int stock){
-        ArrayList<String> lines = new ArrayList<>();
-        String s = name;
-        boolean check=false;
-        File accountFile = new File(new File("src\\main\\java\\gui\\Statistics.txt").getAbsolutePath());
-        try{
-            Scanner sc = new Scanner(accountFile);
-            while(sc.hasNextLine()){
-                String x = sc.nextLine();
-                if(x.startsWith(s)) {
-                    check=true;
-                    String[]w = x.split("[' ']+");
-                    x = w[0]+" "+w[1]+" "+Integer.toString(Integer.parseInt(w[2])+quantity)+" "+w[3]+" "+w[4]+" " +w[5];
-                }
-                lines.add(x);
-            }
-            sc.close();
-        }catch(FileNotFoundException e){
-        }
-        if(!check){
-            String x = name + " " + Double.toString(price)+" "+Integer.toString(quantity)+" "+size+" " + Integer.toString(stock)+" " + anh;
-            lines.add(x);
-        }
-         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-        for (String line : lines) {
-            writer.write(line);
-            writer.newLine();
-        }
-        } catch (IOException e) {
-        e.printStackTrace();
-        }
-    }
+    
     private void updateProduct(String fileName,int quantity,String name){
         ArrayList<String> lines = new ArrayList<>();
         String s = name;
