@@ -1,4 +1,4 @@
-a a 20.03
-thai thai 110.2
-test 12345 900.5
-Admin 1234 319.27
+a a 20
+thai thai 110
+test 12345 62.0
+Admin 1234 1156.0
