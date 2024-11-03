@@ -354,6 +354,9 @@ public class MainScreen extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Checkout successful! Total: $" + totalAmount);
                     depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
                     updateBalanceToFile(user.getUsername(),user.getPassword(),user.getBalance(), "src\\main\\java\\controller\\Accs.txt",totalAmount);
+                    for(Product product: products){
+                        updateProduct("src\\main\\java\\gui\\Product.txt",product.getQuantity(),product.getName());
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Not enough balance for checkout!");
                 }
@@ -364,6 +367,32 @@ public class MainScreen extends javax.swing.JFrame {
 
         this.add(mainPanel);
         setVisible(true);
+    }
+    private void updateProduct(String fileName,int quantity,String name){
+        ArrayList<String> lines = new ArrayList<>();
+        String s = name;
+        File accountFile = new File(new File("src\\main\\java\\gui\\Product.txt").getAbsolutePath());
+        try{
+            Scanner sc = new Scanner(accountFile);
+            while(sc.hasNextLine()){
+                String x = sc.nextLine();
+                if(x.startsWith(s)) {
+                    String[]w = x.split("[' ']+");
+                    x = w[0]+" "+w[1]+" "+Integer.toString(quantity)+" "+w[3]+" "+w[4]+" " +w[5];
+                }
+                lines.add(x);
+            }
+            sc.close();
+        }catch(FileNotFoundException e){
+        }
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+        for (String line : lines) {
+            writer.write(line);
+            writer.newLine();
+        }
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
     }
     private void updateBalanceToFile(String name,String pass,double newBalance, String fileName,double total) {
         ArrayList<String> lines = new ArrayList<>();

@@ -21,7 +21,13 @@ public class CartScreen extends JFrame {
         // Giao diện chính
         JPanel mainPanel = new JPanel(new BorderLayout());
         String[] columnNames = {"Product Name", "Price", "Size", "Quantity"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0){
+        @Override
+          public boolean isCellEditable(int row, int column) {
+        // Trả về false để không cho phép sửa ô nào trong bảng
+        return false;
+        }
+        };
         JTable cartTable = new JTable(tableModel);
         
         // Thêm sản phẩm vào bảng giỏ hàng
