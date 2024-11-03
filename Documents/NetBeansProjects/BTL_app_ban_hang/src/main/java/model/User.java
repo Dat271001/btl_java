@@ -48,6 +48,9 @@ public class User {
     public void addBalance(double amount) {
         this.balance += amount; // Cộng số tiền vào số dư
     }
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
     public boolean deductBalance(double amount) {
         if (amount <= balance) {
