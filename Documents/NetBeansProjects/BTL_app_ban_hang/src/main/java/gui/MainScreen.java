@@ -19,20 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
-class ImageRenderer extends DefaultTableCellRenderer {
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        if (value instanceof JLabel) {
-            return (JLabel) value; // Display the JLabel with the ImageIcon
-        }
-        return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    }
-}
-
 public class MainScreen extends javax.swing.JFrame {
     private User user;
     private UserManager userManager;
@@ -141,7 +129,7 @@ public class MainScreen extends javax.swing.JFrame {
 //        homePage.setVisible(true);
         homePage.setSize(100, 80);
         homePage.setLocation(50, 5);
-        ImageIcon logo = new ImageIcon(new File("src\\main\\java\\img\\HomePageIcon.jpg").getAbsolutePath());
+        ImageIcon logo = new ImageIcon(new File("src\\main\\java\\img\\icons8-home-screen-100.png").getAbsolutePath());
         homePage.setIcon(new controller.NoScalingIcon( logo ));
         homePage.setBorder(BorderFactory.createEmptyBorder());
         homePage.setBackground(lightOrange);
@@ -161,7 +149,7 @@ public class MainScreen extends javax.swing.JFrame {
         searchButton.setLocation(920, 20);
         searchButton.setBackground(Color.white);
         searchButton.setBorder(BorderFactory.createEmptyBorder());
-        searchButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\SearchIcon.jpg").getAbsolutePath()) ) );
+        searchButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\icons8-search-24.png").getAbsolutePath()) ) );
         searchPanel.add(searchButton);
         
         JButton cartButton = new JButton();
@@ -169,20 +157,14 @@ public class MainScreen extends javax.swing.JFrame {
         cartButton.setSize(100, 60);
         cartButton.setLocation(1040, 10);
         cartButton.setBackground(lightOrange);
-        cartButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\CartIcon.jpg").getAbsolutePath()) ) );
+        cartButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\icons8-shopping-cart-50.png").getAbsolutePath()) ) );
         cartButton.addActionListener(e -> {
             CartScreen cartScreen = new CartScreen(cart);
             cartScreen.setVisible(true);
         });
         searchPanel.add(cartButton);
         
-        // Thêm balanceLabel và searchPanel vào một panel và đặt ở phía trên
-//        JPanel topPanel = new JPanel(new GridLayout(2, 1));
-//        topPanel.add(balanceLabel);
-//        topPanel.add(searchPanel);
-//        mainPanel.add(topPanel, BorderLayout.NORTH);
         this.add(searchPanel);
-//        mainPanel.add(searchPanel);
         
         
         // Tạo bảng sản phẩm với DefaultTableModel
@@ -195,7 +177,7 @@ public class MainScreen extends javax.swing.JFrame {
         }
         };
         productTable = new JTable(tableModel);
-        productTable.setRowHeight(150);
+        productTable.setRowHeight(40);
         productTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         JTableHeader header = productTable.getTableHeader();
 //        header.setFont(new Font("Segoe UI", Font.BOLD, 14);
@@ -310,23 +292,6 @@ public class MainScreen extends javax.swing.JFrame {
             Collections.sort(products, Comparator.comparingInt(Product::getQuantity));
             updateProductTable(products);  // Cập nhật bảng sau khi sắp xếp
         });
-        
-        // Sự kiện khi nhấn nút "Sell Product"
-        sellProductButton.addActionListener(e -> {
-            String productName = JOptionPane.showInputDialog("Enter product name:");
-            String size = JOptionPane.showInputDialog("Enter size:");
-            int quantity = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity:"));
-            double price = Double.parseDouble(JOptionPane.showInputDialog("Enter price:"));
-            int stock = Integer.parseInt(JOptionPane.showInputDialog("Enter stock:"));
-            String imagePath = JOptionPane.showInputDialog("Enter image path:");
-
-            Product product = new Product(productName, price, quantity, size, stock, imagePath);
-            productManager.addProduct(user, product);
-            products.add(product);  // Thêm sản phẩm mới vào danh sách sản phẩm
-            updateProductTable(products);  // Cập nhật bảng sản phẩm
-            JOptionPane.showMessageDialog(null, "Product added for sale!");
-        });
-
         // Thêm sự kiện cho giỏ hàng
         addToCartButton.addActionListener(e -> {
             int selectedRow = productTable.getSelectedRow();
@@ -340,6 +305,7 @@ public class MainScreen extends javax.swing.JFrame {
                 if (quantity > 0) {
                     // Nhập số lượng cần mua
                     int t = Integer.parseInt(JOptionPane.showInputDialog("Enter quantity:"));
+                    
                     // Kiểm tra xem số lượng sản phẩm mua có hợp lệ hay không
                     while(t>quantity) {
                         JOptionPane.showInputDialog("The quantity of imported products is invalid.");
@@ -368,6 +334,7 @@ public class MainScreen extends javax.swing.JFrame {
                     updateBalanceToFile(user.getUsername(),user.getPassword(),user.getBalance(), "src\\main\\java\\controller\\Accs.txt",totalAmount);
                     for(Product product: products){
                         updateProduct("src\\main\\java\\gui\\Product.txt",product.getQuantity(),product.getName());
+                        updateStatistics("src\\main\\java\\gui\\Statistics.txt",product.getName(),product.getQuantity(),product.getPrice(),product.getSize(),product.getImagePath(),product.getStock());
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Not enough balance for checkout!");
@@ -379,6 +346,38 @@ public class MainScreen extends javax.swing.JFrame {
 
         this.add(mainPanel);
         setVisible(true);
+    }
+    private void updateStatistics(String fileName,String name,int quantity,double price,String size,String anh,int stock){
+        ArrayList<String> lines = new ArrayList<>();
+        String s = name;
+        boolean check=false;
+        File accountFile = new File(new File("src\\main\\java\\gui\\Statistics.txt").getAbsolutePath());
+        try{
+            Scanner sc = new Scanner(accountFile);
+            while(sc.hasNextLine()){
+                String x = sc.nextLine();
+                if(x.startsWith(s)) {
+                    check=true;
+                    String[]w = x.split("[' ']+");
+                    x = w[0]+" "+w[1]+" "+Integer.toString(Integer.parseInt(w[2])+quantity)+" "+w[3]+" "+w[4]+" " +w[5];
+                }
+                lines.add(x);
+            }
+            sc.close();
+        }catch(FileNotFoundException e){
+        }
+        if(!check){
+            String x = name + " " + Double.toString(price)+" "+Integer.toString(quantity)+" "+size+" " + Integer.toString(stock)+" " + anh;
+            lines.add(x);
+        }
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+        for (String line : lines) {
+            writer.write(line);
+            writer.newLine();
+        }
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
     }
     private void updateProduct(String fileName,int quantity,String name){
         ArrayList<String> lines = new ArrayList<>();
@@ -437,38 +436,26 @@ public class MainScreen extends javax.swing.JFrame {
     private void updateProductTable() {
         tableModel.setRowCount(0);  // Xóa tất cả hàng trong bảng
         for (Product product : products) {
-            ImageIcon originalIcon = new ImageIcon(product.getImagePath());
-            Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-            ImageIcon resizedIcon = new ImageIcon(scaledImage);
-            
             tableModel.addRow(new Object[]{
-//                null,  // Có thể thêm hình ảnh ở đây nếu cần
-                new JLabel(resizedIcon),
+                null,  // Có thể thêm hình ảnh ở đây nếu cần
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),
                 product.getQuantity()
             });
         }
-//        tableModel.
-        productTable.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
     }
     private void updateProductTable(ArrayList<Product> filteredProducts) {
         tableModel.setRowCount(0);  // Xóa tất cả hàng trong bảng
         for (Product product : filteredProducts) {
-            ImageIcon originalIcon = new ImageIcon(product.getImagePath());
-            Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-            ImageIcon resizedIcon = new ImageIcon(scaledImage);
             tableModel.addRow(new Object[]{
-//                null,  // Có thể thêm hình ảnh ở đây nếu cần
-                new JLabel(resizedIcon),
+                null,  // Có thể thêm hình ảnh ở đây nếu cần
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),
                 product.getQuantity()
             });
         }
-        productTable.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -505,13 +492,4 @@ public class MainScreen extends javax.swing.JFrame {
         }
         return productList;
     }
-//     public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            User testUser = new User("testUser", "password", 100.00);
-////            UserManager userManager = new UserManager();
-//            duancuahang.mainScreen = new MainScreen(testUser, userManager);
-//        });
-//    }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
 }

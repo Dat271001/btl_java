@@ -1,0 +1,4 @@
+T-shirt 19.9 4 M 5 path/to/image1.jpg
+Jeans 39.9 1 L 5 path/to/image1.jpg
+Sneakers 59.99 1 M 5 path/to/image1.jpg
+Ao 12.4 2 XL 1 idfds

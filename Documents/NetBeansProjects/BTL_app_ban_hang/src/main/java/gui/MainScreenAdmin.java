@@ -77,15 +77,28 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         depositMenu.setForeground(Color.white);
         depositMenu.add(depositItem);
 
-        // Tạo menu thống kê
+         // Tạo menu thống kê
         JMenu purchaseHistoryMenu = new JMenu("Thống kê");
-        JMenuItem purchaseHistoryItem = new JMenuItem("Xem số sẩn phẩm đã bán");
-        purchaseHistoryItem.addActionListener(e -> {
-            PurchaseHistoryScreen purchaseHistoryScreen = new PurchaseHistoryScreen(cart);
+        JMenuItem HistoryItem = new JMenuItem("Xem số sản phẩm đã bán");
+        HistoryItem.addActionListener(e -> {
+           
+           File accountFile = new File(new File("src\\main\\java\\gui\\Statistics.txt").getAbsolutePath());
+           try{
+            Scanner sc = new Scanner(accountFile);
+            while(sc.hasNextLine()){
+               String s = sc.nextLine();
+               String[] w = s.split("[' ']+");
+               cart.AddProduct(new Product(w[0],Double.parseDouble(w[1]),Integer.parseInt(w[2]), w[3],Integer.parseInt(w[4]),w[5]));
+            }
+            sc.close();
+            }catch(FileNotFoundException ex){
+                ex.printStackTrace();
+            }
+            StatisticsScreen purchaseHistoryScreen = new StatisticsScreen(cart);
             purchaseHistoryScreen.setVisible(true);
         });
         purchaseHistoryMenu.setForeground(Color.white);
-        purchaseHistoryMenu.add(purchaseHistoryItem);
+        purchaseHistoryMenu.add(HistoryItem);
 
         // Thêm menu vào menu bar
         menuBar.add(accountMenu);
@@ -196,8 +209,8 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         
       
         buttonPanel.add(sellProductButton);
-        buttonPanel.add(sortPriceButton1);//Them
-        buttonPanel.add(sortPriceButton2);//Them
+        buttonPanel.add(sortPriceButton1);
+        buttonPanel.add(sortPriceButton2);
         buttonPanel.add(sortQuantityButton);
 
         this.add(buttonPanel);
