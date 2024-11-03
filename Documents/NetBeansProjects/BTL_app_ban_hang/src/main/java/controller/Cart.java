@@ -19,8 +19,24 @@ public class Cart {
         purchaseHistories = new ArrayList<>();
         totalRevenue = 0; // Khởi tạo doanh thu
     }
-
-    // Thêm sản phẩm vào giỏ hàng với kiểm tra tình trạng tồn kho
+    public void AddProduct(Product product){
+         
+     // Kiểm tra xem sản phẩm đã được thêm vào trước hay chưa
+            boolean check = false;
+            for(Product e : products){
+                if(e.getName().compareTo(product.getName())==0){
+                    check = true;
+                    int t = e.getQuantity();
+                    products.remove(e);
+                    products.add(new Product(product.getName(),product.getPrice(),product.getQuantity()+t,product.getSize(),product.getStock(),product.getImagePath()));
+                    break;
+                }
+            }
+            // Nếu sản phẩm chưa được thêm thì tạo mới
+            if(!check) products.add(product);
+            // Sắp xếp sản phẩm theo giá tăng dần
+            Collections.sort(products, Comparator.comparingDouble(Product::getPrice));
+    }
     public void addProduct(Product product) {
         if (product.getStock() <= 0) {
             JOptionPane.showMessageDialog(null, "Sản phẩm đã hết hàng!", "Thông báo", JOptionPane.ERROR_MESSAGE);
