@@ -1,5 +1,10 @@
 package controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import model.Product;
 import model.PurchaseHistory;
 
@@ -8,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Cart {
     private List<Product> products; // Danh sách sản phẩm trong giỏ hàng
@@ -79,7 +85,8 @@ public class Cart {
             PurchaseHistory purchaseHistory = new PurchaseHistory(new ArrayList<>(products), totalAmount);
             purchaseHistories.add(purchaseHistory); // Thêm vào danh sách lịch sử mua hàng
             for (Product product : products) {
-                totalRevenue += product.getPrice() * product.getQuantity(); // Cập nhật doanh thu
+                totalRevenue += product.getPrice() * product.getQuantity(); 
+                updateStatistics("src\\main\\java\\gui\\Statistics.txt",product.getName(),product.getQuantity(),product.getPrice(),product.getSize(),product.getImagePath(),product.getStock());
             }
             clear(); // Xóa giỏ hàng sau khi thanh toán
             JOptionPane.showMessageDialog(null, "Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -129,5 +136,37 @@ public class Cart {
     // Lấy tổng doanh thu
     public double getTotalRevenue() {
         return totalRevenue;
+    }
+    private void updateStatistics(String fileName,String name,int quantity,double price,String size,String anh,int stock){
+        ArrayList<String> lines = new ArrayList<>();
+        String s = name;
+        boolean check=false;
+        File accountFile = new File(new File("src\\main\\java\\gui\\Statistics.txt").getAbsolutePath());
+        try{
+            Scanner sc = new Scanner(accountFile);
+            while(sc.hasNextLine()){
+                String x = sc.nextLine();
+                if(x.startsWith(s)) {
+                    check=true;
+                    String[]w = x.split("[' ']+");
+                    x = w[0]+" "+w[1]+" "+Integer.toString(Integer.parseInt(w[2])+quantity)+" "+w[3]+" "+w[4]+" " +w[5];
+                }
+                lines.add(x);
+            }
+            sc.close();
+        }catch(FileNotFoundException e){
+        }
+        if(!check){
+            String x = name + " " + Double.toString(price)+" "+Integer.toString(quantity)+" "+size+" " + Integer.toString(stock)+" " + anh;
+            lines.add(x);
+        }
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+        for (String line : lines) {
+            writer.write(line);
+            writer.newLine();
+        }
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
     }
 }
