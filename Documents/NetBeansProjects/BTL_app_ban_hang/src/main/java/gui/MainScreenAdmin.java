@@ -62,7 +62,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         JMenu accountMenu = new JMenu("Cá nhân");
         JMenuItem accountItem = new JMenuItem("Thông tin cá nhân");
         accountItem.addActionListener(e -> {
-            AccountScreen accountScreen = new AccountScreen(user, cart);
+            AccountScreen accountScreen = new AccountScreen(user, cart,userManager);
             accountScreen.setVisible(true);
         });
         accountMenu.setForeground(Color.white);

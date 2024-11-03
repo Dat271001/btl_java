@@ -63,7 +63,7 @@ public class MainScreen extends javax.swing.JFrame {
         JMenu accountMenu = new JMenu("Cá nhân");
         JMenuItem accountItem = new JMenuItem("Thông tin cá nhân");
         accountItem.addActionListener(e -> {
-            AccountScreen accountScreen = new AccountScreen(user, cart);
+            AccountScreen accountScreen = new AccountScreen(user, cart,userManager);
             accountScreen.setVisible(true);
         });
         accountMenu.setForeground(Color.white);
@@ -239,7 +239,13 @@ public class MainScreen extends javax.swing.JFrame {
         sellProductButton.setBackground(lightOrange);
         sellProductButton.setForeground(Color.white);
 //        sellProductButton.setBorder(BorderFactory.createEmptyBorder());
-        
+ if (userManager.AdminCheck(user.getUsername(), user.getPassword())) {
+            sellProductButton.setVisible(true); // Hiện nút nếu là admin
+        } else {
+            sellProductButton.setVisible(false); // Ẩn nút nếu không phải admin
+        }
+
+  
         addToCartButton.setSize(180,70);
         addToCartButton.setLocation(10, 280);
         addToCartButton.setFont(new Font("Segoe UI", Font.BOLD, 15));

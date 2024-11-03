@@ -3,6 +3,7 @@ package gui;
 import model.User;
 import controller.Cart;
 import model.Product;
+import controller.UserManager; // Thêm import cho UserManager
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,13 +13,15 @@ import java.awt.event.ActionListener;
 public class AccountScreen extends JFrame {
     private User user;
     private Cart cart; // Khai báo biến cart
+    private UserManager userManager; // Khai báo biến UserManager
     private JTextField addressField, phoneField;
     private JLabel soldProductsLabel, revenueLabel;
 
-    // Thay đổi hàm khởi tạo để nhận thêm tham số Cart
-    public AccountScreen(User user, Cart cart) {
+    // Thay đổi hàm khởi tạo để nhận thêm tham số Cart và UserManager
+    public AccountScreen(User user, Cart cart, UserManager userManager) {
         this.user = user;
         this.cart = cart; // Gán giá trị cho biến cart
+        this.userManager = userManager; // Gán giá trị cho biến UserManager
 
         setTitle("Account Information");
         setSize(400, 300);
@@ -42,14 +45,25 @@ public class AccountScreen extends JFrame {
         phoneField = new JTextField(user.getPhone() == null ? "" : user.getPhone()); // Hiển thị số điện thoại nếu có
         mainPanel.add(phoneField);
 
-        // Số sản phẩm đã bán
-        soldProductsLabel = new JLabel("Sold Products: " + cart.getTotalProductsSold());
-        mainPanel.add(soldProductsLabel);
+     
+        
+            // Số sản phẩm đã bán
+            soldProductsLabel = new JLabel("Sold Products: " + cart.getTotalProductsSold());
+            mainPanel.add(soldProductsLabel);
 
-        // Doanh thu
-        revenueLabel = new JLabel("Revenue: $" + cart.getTotalRevenue());
-        mainPanel.add(revenueLabel);
-
+            // Doanh thu
+            revenueLabel = new JLabel("Revenue: $" + cart.getTotalRevenue());
+            mainPanel.add(revenueLabel);
+        
+                 if (userManager.AdminCheck(user.getUsername(), user.getPassword())) {
+                     soldProductsLabel.setVisible(true);
+                     revenueLabel.setVisible(true);
+                     
+                 } else{
+                     soldProductsLabel.setVisible(false);
+                     revenueLabel.setVisible(false);
+                 }
+                 
         // Nút Cập nhật
         JButton updateButton = new JButton("Update Information");
         updateButton.addActionListener(new ActionListener() {
@@ -89,4 +103,7 @@ public class AccountScreen extends JFrame {
         add(mainPanel);
         setVisible(true);
     }
-}
+    
+    }
+
+    
