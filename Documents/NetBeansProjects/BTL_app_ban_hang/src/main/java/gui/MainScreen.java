@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 public class MainScreen extends javax.swing.JFrame {
@@ -47,28 +49,163 @@ public class MainScreen extends javax.swing.JFrame {
         this.setResizable(false);
 
         setTitle("Main Screen - Welcome " + user.getUsername());
-        setSize(1200, 700);
+        setSize(1500,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        this.getContentPane().setBackground(boldGrey);
+        this.getContentPane().setBackground(Color.WHITE);
 
-        //1 - Thêm thanh menu bar
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        menuBar.setBorder(BorderFactory.createEmptyBorder());
-        menuBar.setBackground(boldOrange);
         
-        // Tạo menu Cá nhân
-        JMenu accountMenu = new JMenu("Cá nhân");
-        JMenuItem accountItem = new JMenuItem("Thông tin cá nhân");
+        //1- left Panel
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(null);
+        leftPanel.setSize(300,800);
+        leftPanel.setLocation(0,0);
+        leftPanel.setBackground(Color.blue);
+        
+        JLabel homePage = new JLabel();
+        homePage.setSize(300,200);
+        homePage.setLocation(0,0);
+        leftPanel.add(homePage);
+        
+        JButton accountItem = new JButton("Profile");
+        accountItem.setSize(300,50);
+        accountItem.setLocation(0,250);
+        leftPanel.add(accountItem);
+        
+        JButton purchaseHistoryItem = new JButton("History");
+        purchaseHistoryItem.setSize(300,50);
+        purchaseHistoryItem.setLocation(0,330);
+        leftPanel.add(purchaseHistoryItem);
+        
+        JButton depositItem = new JButton("Deposit$");
+        depositItem.setSize(300,50);
+        depositItem.setLocation(0,410);
+        leftPanel.add(depositItem);
+        
+        JButton checkoutButton = new JButton("Checkout");
+        checkoutButton.setSize(300,50);
+        checkoutButton.setLocation(0,490);
+        leftPanel.add(checkoutButton);
+        
+        JButton cartButton = new JButton("Cart");
+        cartButton.setSize(300,50);
+        cartButton.setLocation(0,570);
+        leftPanel.add(cartButton);
+        
+        JButton logoutButton = new JButton("Log Out");
+        logoutButton.setSize(300,50);
+        logoutButton.setLocation(0,650);
+        leftPanel.add(logoutButton);
+        
+        this.add(leftPanel);
+        
+        //2- search Panel
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        searchPanel.setSize(1500,50);
+        searchPanel.setLocation(300,250);
+        searchPanel.setBackground(Color.ORANGE);
+        
+        JLabel searchTitle = new JLabel("Search: ");
+        searchPanel.add(searchTitle);
+        
+        JTextField searchField = new JTextField();
+        searchField.setPreferredSize(new Dimension(700,40));
+        searchPanel.add(searchField);
+        
+        this.add(searchPanel);
+        
+//        3- info Panel & Image
+        JLabel productImage = new JLabel("IMG");
+        productImage.setLocation(350,50);
+        productImage.setSize(200,200);
+        this.add(productImage);
+        
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(null);
+        infoPanel.setSize(900,250);
+        infoPanel.setLocation(600,0);
+        infoPanel.setBackground(Color.yellow);
+        
+        JLabel prodName = new JLabel("Name:");
+        prodName.setLocation(100,50);
+        prodName.setSize(100,20);
+        infoPanel.add(prodName);
+        
+        JTextField prodNameField = new JTextField("Name");
+        prodNameField.setLocation(200,50);
+        prodNameField.setSize(200,20);
+        infoPanel.add(prodNameField);
+        
+        JLabel prodSize = new JLabel("Size:");
+        prodSize.setLocation(100,100);
+        prodSize.setSize(100,20);
+        infoPanel.add(prodSize);
+        
+        JTextField prodSizeField = new JTextField("Name");
+        prodSizeField.setLocation(200,100);
+        prodSizeField.setSize(200,20);
+        infoPanel.add(prodSizeField);
+        
+        JLabel prodPrice = new JLabel("Price:");
+        prodPrice.setLocation(100,150);
+        prodPrice.setSize(100,20);
+        infoPanel.add(prodPrice);
+        
+        JTextField prodPriceField = new JTextField("Name");
+        prodPriceField.setLocation(200,150);
+        prodPriceField.setSize(200,20);
+        infoPanel.add(prodPriceField);
+        
+        JLabel prodQuantity = new JLabel("Quantity:");
+        prodQuantity.setLocation(100,200);
+        prodQuantity.setSize(100,20);
+        infoPanel.add(prodQuantity);
+        
+        JTextField prodQuantityField = new JTextField("Name");
+        prodQuantityField.setLocation(200,200);
+        prodQuantityField.setSize(200,20);
+        infoPanel.add(prodQuantityField);
+        
+        
+        
+        this.add(infoPanel);
+        
+        JPanel functionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        functionPanel.setSize(1500,50);
+        functionPanel.setLocation(300,300);
+        functionPanel.setBackground(Color.cyan);
+        
+        JButton sortPriceButton1 = new JButton("Sort UP");
+        functionPanel.add(sortPriceButton1);
+        
+        JButton sortPriceButton2 = new JButton("Sort DOWN");
+        functionPanel.add(sortPriceButton2);
+        
+        JButton sortQuantityButton = new JButton("Sort by quantity");
+        functionPanel.add(sortQuantityButton);
+        
+        JButton searchButton = new JButton("Search");
+        functionPanel.add(searchButton);
+        
+        JButton addToCartButton = new JButton("Add to cart");
+        functionPanel.add(addToCartButton);
+        
+        this.add(functionPanel);
+        
+        //4- Main Panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setSize(1200,450);
+        mainPanel.setLocation(300,350);
+        mainPanel.setBackground(Color.red);
+        
+        
         accountItem.addActionListener(e -> {
             AccountScreen accountScreen = new AccountScreen(user, cart,userManager);
             accountScreen.setVisible(true);
         });
-        accountMenu.setForeground(Color.white);
-        accountMenu.add(accountItem);
-
+        
         // Tạo menu Giỏ hàng
 //        JMenu cartMenu = new JMenu("Giỏ hàng");
 //        JMenuItem cartItem = new JMenuItem("Xem Giỏ hàng");
@@ -79,96 +216,31 @@ public class MainScreen extends javax.swing.JFrame {
 //        cartMenu.add(cartItem);
         
         // Tạo menu Nạp tiền
-        JMenu depositMenu = new JMenu("$: " + user.getBalance());
-        JMenuItem depositItem = new JMenuItem("Nạp tiền");
+//Tam thoi cmt        JMenu depositMenu = new JMenu("$: " + user.getBalance());
         depositItem.addActionListener(e -> {
             QRCodeScreen qrCodeScreen = new QRCodeScreen(user);
             qrCodeScreen.setVisible(true);
             
             // Khi QRCodeScreen đóng, cập nhật lại text của depositMenu
-            depositMenu.setText("$: " + user.getBalance());
+// Tam thoi cmt            depositMenu.setText("$: " + user.getBalance());
         });
         
-        depositMenu.setForeground(Color.white);
-        depositMenu.add(depositItem);
         
         // Tạo menu Lịch sử mua hàng
-        JMenu purchaseHistoryMenu = new JMenu("Lịch sử mua hàng");
-        JMenuItem purchaseHistoryItem = new JMenuItem("Xem Lịch sử mua hàng");
         purchaseHistoryItem.addActionListener(e -> {
             PurchaseHistoryScreen purchaseHistoryScreen = new PurchaseHistoryScreen(cart);
             purchaseHistoryScreen.setVisible(true);
         });
-        purchaseHistoryMenu.setForeground(Color.white);
-        purchaseHistoryMenu.add(purchaseHistoryItem);
 
-        // Thêm menu vào menu bar
-        menuBar.add(accountMenu);
-//        menuBar.add(cartMenu);
-        menuBar.add(depositMenu);
-        menuBar.add(purchaseHistoryMenu); // Thêm menu Lịch sử mua hàng
-        setJMenuBar(menuBar);
-
-        //2 - Giao diện chính
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.setLocation(20, 150);
-        mainPanel.setSize(940,450);
-        
 
         // Hiển thị số dư
 //        balanceLabel = new JLabel("Balance: $" + user.getBalance());
 
 
-        //3 - Search Panel
-        JPanel searchPanel = new JPanel();
-        searchPanel.setLayout(null);
-        searchPanel.setVisible(true);
-        searchPanel.setSize(1200,90);
-        searchPanel.setLocation(0, 0);
-        searchPanel.setBackground(lightOrange);
-        
-        //Home Button
-        JButton homePage = new JButton();
-//        homePage.setVisible(true);
-        homePage.setSize(100, 80);
-        homePage.setLocation(50, 5);
-        ImageIcon logo = new ImageIcon(new File("src\\main\\java\\img\\icons8-home-screen-100.png").getAbsolutePath());
-        homePage.setIcon(new controller.NoScalingIcon( logo ));
-        homePage.setBorder(BorderFactory.createEmptyBorder());
-        homePage.setBackground(lightOrange);
-        searchPanel.add(homePage);
-        
-        //Search bar
-        JTextField searchField = new JTextField(15);
-//        searchField.setVisible(true);
-        searchField.setSize(700, 40);
-        searchField.setLocation(200, 20);
-        searchPanel.add(searchField);
-        
-        //Search button
-        JButton searchButton = new JButton();
-//        searchButton.setVisible(true);
-        searchButton.setSize(70, 40);
-        searchButton.setLocation(920, 20);
-        searchButton.setBackground(Color.white);
-        searchButton.setBorder(BorderFactory.createEmptyBorder());
-        searchButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\icons8-search-24.png").getAbsolutePath()) ) );
-        searchPanel.add(searchButton);
-        
-        JButton cartButton = new JButton();
-//        cartButton.setVisible(true);
-        cartButton.setSize(100, 60);
-        cartButton.setLocation(1040, 10);
-        cartButton.setBackground(lightOrange);
-        cartButton.setIcon( new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\icons8-shopping-cart-50.png").getAbsolutePath()) ) );
         cartButton.addActionListener(e -> {
             CartScreen cartScreen = new CartScreen(cart);
             cartScreen.setVisible(true);
         });
-        searchPanel.add(cartButton);
-        
-        this.add(searchPanel);
         
         
         // Tạo bảng sản phẩm với DefaultTableModel
@@ -193,80 +265,15 @@ public class MainScreen extends javax.swing.JFrame {
         JScrollPane scrollPane = new JScrollPane(productTable);
 //        mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
+        this.add(mainPanel);
 
-        // 4 - FunctionButtonsPanel - Các nút chức năng
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLocation(980, 150);
-        buttonPanel.setSize(200,450);
-        buttonPanel.setLayout(null);
-        
-        // 2 Nut chuc nhung lon
-        JButton addToCartButton = new JButton("Add to Cart");
-        JButton checkoutButton = new JButton("Checkout");
-        
-        // Thêm các nút sắp xếp
-        JButton sortPriceButton1 = new JButton("Sort by Price ↑ ");//Them
-        JButton sortPriceButton2 = new JButton("Sort by Price ↓ ");//Them
-        JButton sortQuantityButton = new JButton("Sort by Quantity");
-        JButton sellProductButton = new JButton("Sell Product");
-        
-        sortPriceButton1.setSize(160,40);
-        sortPriceButton1.setLocation(20, 20);
-        sortPriceButton1.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        sortPriceButton1.setBackground(lightOrange);
-        sortPriceButton1.setForeground(Color.white);
-//        sortPriceButton1.setBorder(BorderFactory.createEmptyBorder());
-        
-        sortPriceButton2.setSize(160,40);
-        sortPriceButton2.setLocation(20, 70);
-        sortPriceButton2.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        sortPriceButton2.setBackground(lightOrange);
-        sortPriceButton2.setForeground(Color.white);
-//        sortPriceButton2.setBorder(BorderFactory.createEmptyBorder());
-        
-        sortQuantityButton.setSize(160,40);
-        sortQuantityButton.setLocation(20, 120);
-        sortQuantityButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        sortQuantityButton.setBackground(lightOrange);
-        sortQuantityButton.setForeground(Color.white);
-//        sortQuantityButton.setBorder(BorderFactory.createEmptyBorder());
-        
-        sellProductButton.setSize(160,40);
-        sellProductButton.setLocation(20, 170);
-        sellProductButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        sellProductButton.setBackground(lightOrange);
-        sellProductButton.setForeground(Color.white);
-//        sellProductButton.setBorder(BorderFactory.createEmptyBorder());
- if (userManager.AdminCheck(user.getUsername(), user.getPassword())) {
-            sellProductButton.setVisible(true); // Hiện nút nếu là admin
-        } else {
-            sellProductButton.setVisible(false); // Ẩn nút nếu không phải admin
-        }
+// if (userManager.AdminCheck(user.getUsername(), user.getPassword())) {
+//            sellProductButton.setVisible(true); // Hiện nút nếu là admin
+//        } else {
+//            sellProductButton.setVisible(false); // Ẩn nút nếu không phải admin
+//        }
 
   
-        addToCartButton.setSize(180,70);
-        addToCartButton.setLocation(10, 280);
-        addToCartButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        addToCartButton.setBackground(lightOrange);
-        addToCartButton.setForeground(Color.white);
-//        addToCartButton.setBorder(BorderFactory.createEmptyBorder());
-        
-        checkoutButton.setSize(180,70);
-        checkoutButton.setLocation(10, 370);
-        checkoutButton.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        checkoutButton.setBackground(lightOrange);
-        checkoutButton.setForeground(Color.white);
-//        checkoutButton.setBorder(BorderFactory.createEmptyBorder());
-        
-        buttonPanel.add(sellProductButton);
-        buttonPanel.add(addToCartButton);
-        buttonPanel.add(checkoutButton);
-        buttonPanel.add(sortPriceButton1);//Them
-        buttonPanel.add(sortPriceButton2);//Them
-        buttonPanel.add(sortQuantityButton);
-//        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        
-        this.add(buttonPanel);
         
         // Thêm sự kiện tìm kiếm
         searchButton.addActionListener(e -> {
@@ -334,7 +341,7 @@ public class MainScreen extends javax.swing.JFrame {
                 if (user.deductBalance(totalAmount)) {
                     cart.checkout();  // Cập nhật lịch sử mua hàng
                     JOptionPane.showMessageDialog(null, "Checkout successful! Total: $" + totalAmount);
-                    depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
+//Tam thoi cmt                    depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
                     updateBalanceToFile(user.getUsername(),user.getPassword(),user.getBalance(), "src\\main\\java\\controller\\Accs.txt",totalAmount);
                     for(Product product: products){
                         updateProduct("src\\main\\java\\gui\\Product.txt",product.getQuantity()-product.getQuantity_Sold(),product.getName());
@@ -362,6 +369,36 @@ public class MainScreen extends javax.swing.JFrame {
 
         this.add(mainPanel);
         setVisible(true);
+        
+        //Listener for List
+        // Get the selection model and set it to single selection mode
+        ListSelectionModel selectionModel = productTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // Add a ListSelectionListener to handle row selection changes
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                // Ignore extra events while selection is adjusting
+                if (!event.getValueIsAdjusting()) {
+                    int selectedRow = productTable.getSelectedRow();
+                    if (selectedRow != -1) { // Ensure a row is selected
+                        String imgPath = (String) productTable.getValueAt(selectedRow, 0);
+                        ImageIcon originalIcon = new ImageIcon(imgPath);
+                        Image scaledImage = originalIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+                        
+                        productImage.setIcon(resizedIcon);
+                        prodNameField.setText( (String) productTable.getValueAt(selectedRow, 1));
+                        prodPriceField.setText("" + (double) productTable.getValueAt(selectedRow, 2) );
+                        prodSizeField.setText((String) productTable.getValueAt(selectedRow, 3));
+                        prodQuantityField.setText( "" + (int) productTable.getValueAt(selectedRow, 4));
+                    }
+                }
+            }
+        });
+        
+        //END
     }
     
     private void updateProduct(String fileName,int quantity,String name){
@@ -422,7 +459,8 @@ public class MainScreen extends javax.swing.JFrame {
         tableModel.setRowCount(0);  // Xóa tất cả hàng trong bảng
         for (Product product : products) {
             tableModel.addRow(new Object[]{
-                null,  // Có thể thêm hình ảnh ở đây nếu cần
+//                null,  // Có thể thêm hình ảnh ở đây nếu cần
+                product.getImagePath(),
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),
@@ -434,7 +472,8 @@ public class MainScreen extends javax.swing.JFrame {
         tableModel.setRowCount(0);  // Xóa tất cả hàng trong bảng
         for (Product product : filteredProducts) {
             tableModel.addRow(new Object[]{
-                null,  // Có thể thêm hình ảnh ở đây nếu cần
+//                null,  // Có thể thêm hình ảnh ở đây nếu cần
+                product.getImagePath(),
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),

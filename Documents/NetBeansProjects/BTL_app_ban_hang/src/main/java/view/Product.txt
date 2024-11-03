@@ -1,6 +1,0 @@
-T-shirt 19 2 M 5 path/to/image1.jpg
-Jeans 39 1 L 5 path/to/image1.jpg
-Sneakers 59 17 M 5 path/to/image1.jpg
-Ao 12 19 XL 1 idfds
-Tất 1 15 Dài 30 dsfjsdklfs
-Ao_Phong 32 26 M 12 dgsdfgsdg

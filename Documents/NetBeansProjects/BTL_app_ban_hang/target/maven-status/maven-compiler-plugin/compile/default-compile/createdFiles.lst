@@ -1,5 +1,6 @@
 controller\Cart.class
 gui\LoadingScreen.class
+gui\MainScreen$2.class
 gui\ProductDisplayPanel.class
 gui\AccountScreen$1.class
 gui\CartScreen$1.class
