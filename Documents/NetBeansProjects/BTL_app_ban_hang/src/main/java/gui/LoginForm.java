@@ -15,7 +15,7 @@ public class LoginForm extends JFrame{
     JLabel image;
     JPanel loginForm;
 //    ImageIcon logo = new ImageIcon("D:\\New Folder\\BTL_Java\\src\\img\\Logo.jpg");
-    Icon logo = new controller.NoScalingIcon( new ImageIcon(new File("src\\main\\java\\img\\MainLogo.jpg").getAbsolutePath()) );
+    ImageIcon logo = new ImageIcon(new File("src\\main\\java\\img\\Logo.jpg").getAbsolutePath());
     
     public LoginForm() throws HeadlessException {
 //        this.setVisible(true);
@@ -30,8 +30,8 @@ public class LoginForm extends JFrame{
         image = new JLabel();
         image.setVisible(true);
 //        image.setText("JLabel");
-        image.setBackground(new Color(248, 87, 55));
-        image.setOpaque(true);
+//        image.setBackground(Color.red);
+//        image.setOpaque(true);
         image.setSize(400, 450);
         image.setLocation(0, 0);
         image.setIcon(logo);

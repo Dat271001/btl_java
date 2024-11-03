@@ -1,4 +1,6 @@
-T-shirt 19.9 10 M 5 src\\main\\java\\img\\shirt1.jpg
-Jeans 39.9 5 L 5 src\\main\\java\\img\\longpant2.jpg
-Sneakers 59.99 3 M 5 src\\main\\java\\img\\sneaker2.jpg
-Ao 12.4 12 XL 1 src\\main\\java\\img\\shirt1.jpg
+T-shirt 19 4 M 5 path/to/image1.jpg
+Jeans 39 1 L 5 path/to/image1.jpg
+Sneakers 59 0 M 5 path/to/image1.jpg
+Ao 12 0 XL 1 idfds
+Tất 1 27 Dài 30 dsfjsdklfs
+Ao_Phong 32 12 M 12 dgsdfgsdg
