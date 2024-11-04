@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 
 public class QRCodeScreen extends JFrame {
     private User user;
-
+    private String tm="0";
     public QRCodeScreen(User user){
         this.user = user;
 
@@ -66,7 +66,7 @@ public class QRCodeScreen extends JFrame {
         
         confirmButton.addActionListener(e -> {
         
-            String depositAmount = (String) amountComboBox.getSelectedItem();
+        String depositAmount = (String) amountComboBox.getSelectedItem();
         String selectedBank = (String) bankComboBox.getSelectedItem();
         String accountNumber = accountField.getText();
         
@@ -78,25 +78,15 @@ public class QRCodeScreen extends JFrame {
                 + "Bank: " + selectedBank + "\n"
                 + "Account: " + accountNumber + "\n"
                 + "Amount: " + depositAmount);
-              
-              user.addBalance(Double.parseDouble(depositAmount));
-                MainScreen.depositMenu.setText("$: " + user.getBalance());
-        }
-        });
-        inputPanel.add(new JLabel()); // Thêm một ô trống để căn nút vào giữa
-        inputPanel.add(confirmButton);
 
-        mainPanel.add(inputPanel, BorderLayout.CENTER);
-        add(mainPanel);
-        setVisible(true);
-        // Cập nhật lại số tiền sau khi nạp
-        
-        ArrayList<String> lines = new ArrayList<>();
+                user.addBalance(Double.parseDouble(depositAmount));
+                ArrayList<String> lines = new ArrayList<>();
         File accountFile = new File(new File("src\\main\\java\\controller\\Accs.txt").getAbsolutePath());
         try{
         Scanner sn = new Scanner(accountFile);
         while(sn.hasNextLine()){
             String tmp = sn.nextLine();
+            System.out.println(tmp+" "+user.getUsername()+" "+user.getPassword());
             if(tmp.startsWith(user.getUsername()+" "+user.getPassword())){
                 tmp = user.getUsername()+" "+user.getPassword()+" "+Double.toString(user.getBalance());
             }
@@ -111,9 +101,19 @@ public class QRCodeScreen extends JFrame {
             writer.write(line);
             writer.newLine();
         }
-        } catch (IOException e) {
-        e.printStackTrace();
+        } catch (IOException ex) {
         }
+                MainScreen.depositMenu.setText("$: " + user.getBalance());
+        }
+        });
+        inputPanel.add(new JLabel()); // Thêm một ô trống để căn nút vào giữa
+        inputPanel.add(confirmButton);
+
+        mainPanel.add(inputPanel, BorderLayout.CENTER);
+        add(mainPanel);
+        setVisible(true);
+        // Cập nhật lại số tiền sau khi nạp
+        
         
         // Thêm mã QR
         JLabel qrLabel = new JLabel(new ImageIcon("src\\main\\java\\img\\QR code.jpg")); // Đường dẫn đến ảnh mã QR của bạn
