@@ -63,19 +63,25 @@ public class MainScreen extends javax.swing.JFrame {
         leftPanel.setLocation(0,0);
         leftPanel.setBackground(Color.blue);
         
-        JLabel homePage = new JLabel();
+        JLabel homePage = new JLabel("HOME");
         homePage.setSize(300,200);
         homePage.setLocation(0,0);
         leftPanel.add(homePage);
         
+        JLabel depositMenu = new JLabel("$: " + user.getBalance());
+//        JLabel depositMenu = new JLabel("JLABELLLLL");
+        depositMenu.setLocation(0,250);
+        depositMenu.setSize(300,50);
+        leftPanel.add(depositMenu);
+        
         JButton accountItem = new JButton("Profile");
         accountItem.setSize(300,50);
-        accountItem.setLocation(0,250);
+        accountItem.setLocation(0,300);
         leftPanel.add(accountItem);
         
         JButton purchaseHistoryItem = new JButton("History");
         purchaseHistoryItem.setSize(300,50);
-        purchaseHistoryItem.setLocation(0,330);
+        purchaseHistoryItem.setLocation(0,350);
         leftPanel.add(purchaseHistoryItem);
         
         JButton depositItem = new JButton("Deposit$");
@@ -110,8 +116,11 @@ public class MainScreen extends javax.swing.JFrame {
         searchPanel.add(searchTitle);
         
         JTextField searchField = new JTextField();
-        searchField.setPreferredSize(new Dimension(700,40));
+        searchField.setPreferredSize(new Dimension(600,40));
         searchPanel.add(searchField);
+        
+        JButton searchButton = new JButton("Search");
+        searchPanel.add(searchButton);
         
         this.add(searchPanel);
         
@@ -135,6 +144,7 @@ public class MainScreen extends javax.swing.JFrame {
         JTextField prodNameField = new JTextField("Name");
         prodNameField.setLocation(200,50);
         prodNameField.setSize(200,20);
+        prodNameField.setEditable(false);
         infoPanel.add(prodNameField);
         
         JLabel prodSize = new JLabel("Size:");
@@ -145,6 +155,7 @@ public class MainScreen extends javax.swing.JFrame {
         JTextField prodSizeField = new JTextField("Name");
         prodSizeField.setLocation(200,100);
         prodSizeField.setSize(200,20);
+        prodSizeField.setEditable(false);
         infoPanel.add(prodSizeField);
         
         JLabel prodPrice = new JLabel("Price:");
@@ -155,6 +166,7 @@ public class MainScreen extends javax.swing.JFrame {
         JTextField prodPriceField = new JTextField("Name");
         prodPriceField.setLocation(200,150);
         prodPriceField.setSize(200,20);
+        prodPriceField.setEditable(false);
         infoPanel.add(prodPriceField);
         
         JLabel prodQuantity = new JLabel("Quantity:");
@@ -165,6 +177,7 @@ public class MainScreen extends javax.swing.JFrame {
         JTextField prodQuantityField = new JTextField("Name");
         prodQuantityField.setLocation(200,200);
         prodQuantityField.setSize(200,20);
+        prodQuantityField.setEditable(false);
         infoPanel.add(prodQuantityField);
         
         
@@ -184,9 +197,6 @@ public class MainScreen extends javax.swing.JFrame {
         
         JButton sortQuantityButton = new JButton("Sort by quantity");
         functionPanel.add(sortQuantityButton);
-        
-        JButton searchButton = new JButton("Search");
-        functionPanel.add(searchButton);
         
         JButton addToCartButton = new JButton("Add to cart");
         functionPanel.add(addToCartButton);
@@ -216,13 +226,13 @@ public class MainScreen extends javax.swing.JFrame {
 //        cartMenu.add(cartItem);
         
         // Tạo menu Nạp tiền
-//Tam thoi cmt        JMenu depositMenu = new JMenu("$: " + user.getBalance());
+        
         depositItem.addActionListener(e -> {
             QRCodeScreen qrCodeScreen = new QRCodeScreen(user);
             qrCodeScreen.setVisible(true);
             
-            // Khi QRCodeScreen đóng, cập nhật lại text của depositMenu
-// Tam thoi cmt            depositMenu.setText("$: " + user.getBalance());
+//             Khi QRCodeScreen đóng, cập nhật lại text của depositMenu
+            depositMenu.setText("$: " + user.getBalance());
         });
         
         
