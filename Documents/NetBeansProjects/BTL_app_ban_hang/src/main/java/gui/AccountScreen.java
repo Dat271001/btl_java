@@ -45,24 +45,22 @@ public class AccountScreen extends JFrame {
         phoneField = new JTextField(user.getPhone() == null ? "" : user.getPhone()); // Hiển thị số điện thoại nếu có
         mainPanel.add(phoneField);
 
-     
-        
-            // Số sản phẩm đã bán
-            soldProductsLabel = new JLabel("Sold Products: " + cart.getTotalProductsSold());
-            mainPanel.add(soldProductsLabel);
+        // Số sản phẩm đã bán
+        soldProductsLabel = new JLabel("Sold Products: " + cart.getTotalProductsSold());
+        mainPanel.add(soldProductsLabel);
 
-            // Doanh thu
-            revenueLabel = new JLabel("Revenue: $" + cart.getTotalRevenue());
-            mainPanel.add(revenueLabel);
-        
-                 if (userManager.AdminCheck(user.getUsername(), user.getPassword())) {
-                     soldProductsLabel.setVisible(true);
-                     revenueLabel.setVisible(true);
-                     
-                 } else{
-                     soldProductsLabel.setVisible(false);
-                     revenueLabel.setVisible(false);
-                 }
+        // Doanh thu
+        revenueLabel = new JLabel("Revenue: $" + cart.getTotalRevenue());
+        mainPanel.add(revenueLabel);
+
+        if (userManager.AdminCheck(user.getUsername(), user.getPassword())) {
+            soldProductsLabel.setVisible(true);
+            revenueLabel.setVisible(true);
+
+        } else{
+            soldProductsLabel.setVisible(false);
+            revenueLabel.setVisible(false);
+        }
                  
         // Nút Cập nhật
         JButton updateButton = new JButton("Update Information");

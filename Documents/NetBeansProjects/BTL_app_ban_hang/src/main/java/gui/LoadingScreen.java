@@ -23,6 +23,7 @@ public class LoadingScreen extends javax.swing.JFrame {
         Image scaledImage = originalIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imgMain.setIcon(resizedIcon);
+        setLocationRelativeTo(null);
     }
 
     /**
