@@ -81,21 +81,8 @@ public class Withdraw extends JFrame {
                   System.out.println(depositAmount);
 //                  user.deductBalance(depositAmount);
                   MainScreenAdmin.depositMenu.setText("$: " + user.getBalance());
-              } else{
-                  JOptionPane.showMessageDialog(this, "Not enough money !");
-              };
-              
-        }
-        });
-        inputPanel.add(new JLabel()); // Thêm một ô trống để căn nút vào giữa
-        inputPanel.add(confirmButton);
-
-        mainPanel.add(inputPanel, BorderLayout.CENTER);
-        add(mainPanel);
-        setVisible(true);
-        // Cập nhật lại số tiền sau khi nạp
-        
-        ArrayList<String> lines = new ArrayList<>();
+                  
+                  ArrayList<String> lines = new ArrayList<>();
         File accountFile = new File(new File("src\\main\\java\\controller\\Accs.txt").getAbsolutePath());
         try{
         Scanner sn = new Scanner(accountFile);
@@ -115,9 +102,23 @@ public class Withdraw extends JFrame {
             writer.write(line);
             writer.newLine();
         }
-        } catch (IOException e) {
-        e.printStackTrace();
+        } catch (IOException ex) {
         }
+              } else{
+                  JOptionPane.showMessageDialog(this, "Not enough money !");
+              };
+              
+        }
+        });
+        inputPanel.add(new JLabel()); // Thêm một ô trống để căn nút vào giữa
+        inputPanel.add(confirmButton);
+
+        mainPanel.add(inputPanel, BorderLayout.CENTER);
+        add(mainPanel);
+        setVisible(true);
+        // Cập nhật lại số tiền sau khi nạp
+        
+        
         
         // Thêm mã QR
         JLabel qrLabel = new JLabel(new ImageIcon("src\\main\\java\\img\\QR code.jpg")); // Đường dẫn đến ảnh mã QR của bạn
