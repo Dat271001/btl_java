@@ -1,6 +1,7 @@
-T-shirt 19 2 M 5 shirt1.jpg
-Jeans 39 1 L 5 longpant1.jpg
-Sneakers 59 17 M 5 sneaker1.jpg
-Ao 12 19 XL 1 shirt2.jpg
-Tất 1 15 Dài 30 short1.jpg
-Ao_Phong 32 26 M 12 sneaker2.jpg
+
+T-shirt 19.0 2 XL 2 shirt1.jpg
+Jeans 39.0 1 XL 1 longpant1.jpg
+Tất 1.0 15 XL 15 short1.jpg
+Ao_Phong 32.0 26 XL 26 sneaker2.jpg
+AoA 12.0 19 XL 19 shirt2.jpg
+Cai_Giay_012 59.0 17 XL 17 sneaker1.jpg

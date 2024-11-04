@@ -69,6 +69,7 @@ public class Product {
     }
 
     public String getImagePath() {
+        if(this.imagePath.length() < 12) this.imagePath = new File("src\\main\\java\\img\\" + this.imagePath).getAbsolutePath(); // Khởi tạo đường dẫn hình ảnh
         return imagePath;
     }
 

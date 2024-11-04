@@ -321,10 +321,10 @@ public class MainScreen extends javax.swing.JFrame {
         addToCartButton.addActionListener(e -> {
             int selectedRow = productTable.getSelectedRow();
             if (selectedRow != -1) {
-                String productName = (String) productTable.getValueAt(selectedRow, 1);
-                double price = (double) productTable.getValueAt(selectedRow, 2);
-                String size = (String) productTable.getValueAt(selectedRow, 3);
-                int quantity = (int) productTable.getValueAt(selectedRow, 4);
+                String productName = (String) productTable.getValueAt(selectedRow, 0);
+                double price = (double) productTable.getValueAt(selectedRow, 1);
+                String size = (String) productTable.getValueAt(selectedRow, 2);
+                int quantity = (int) productTable.getValueAt(selectedRow, 3);
 
            // Kiểm tra số lượng có đủ không
                 if (quantity > 0) {
@@ -538,6 +538,7 @@ public class MainScreen extends javax.swing.JFrame {
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){
                 String s = sc.nextLine();
+                if(s.isBlank() || s.isEmpty()) continue;
                 String[]w = s.split("[' ']+");
                 productList.add(new Product(w[0],Double.parseDouble(w[1]),Integer.parseInt(w[2]), w[3],Integer.parseInt(w[4]),w[5]));
             }

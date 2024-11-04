@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -38,14 +40,16 @@ public class MainScreenAdmin extends javax.swing.JFrame {
     
     JPanel leftPanel, searchPanel, infoPanel, mainPanel, functionPanel;
     JLabel homePage;
-    JButton accountItem, HistoryItem, depositItem, checkoutButton, sellProductButton, logoutButton;
+    JButton accountItem, HistoryItem, depositItem, sellProductButton, logoutButton;
     JLabel searchTitle;
     JTextField searchField;
     JButton searchButton;
     JLabel productImage, prodName, prodSize, prodPrice, prodQuantity;
     JTextField prodNameField, prodSizeField, prodPriceField, prodQuantityField;
-    JButton sortPriceButton1, sortPriceButton2, sortQuantityButton, addToCartButton;
+    JButton sortPriceButton1, sortPriceButton2, sortQuantityButton, adjustmentButton;
     Color cBlack = new Color(39, 35, 67);
+    
+    Product selectedProd = null;
     
     
     private void UI(){
@@ -169,7 +173,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         prodNameField = new JTextField("Name");
         prodNameField.setLocation(200,50);
         prodNameField.setSize(200,20);
-        prodNameField.setEditable(false);
         infoPanel.add(prodNameField);
         
         prodSize = new JLabel("Size:");
@@ -180,7 +183,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         prodSizeField = new JTextField("Name");
         prodSizeField.setLocation(200,100);
         prodSizeField.setSize(200,20);
-        prodSizeField.setEditable(false);
         infoPanel.add(prodSizeField);
         
         prodPrice = new JLabel("Price:");
@@ -191,7 +193,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         prodPriceField = new JTextField("Name");
         prodPriceField.setLocation(200,150);
         prodPriceField.setSize(200,20);
-        prodPriceField.setEditable(false);
         infoPanel.add(prodPriceField);
         
         prodQuantity = new JLabel("Quantity:");
@@ -202,7 +203,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         prodQuantityField = new JTextField("Name");
         prodQuantityField.setLocation(200,200);
         prodQuantityField.setSize(200,20);
-        prodQuantityField.setEditable(false);
         infoPanel.add(prodQuantityField);
         
         
@@ -225,8 +225,8 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         sortQuantityButton = new JButton("Sort by quantity");
         functionPanel.add(sortQuantityButton);
         
-//        addToCartButton = new JButton("Add to cart");
-//        functionPanel.add(addToCartButton);
+        adjustmentButton = new JButton("Adjust");
+        functionPanel.add(adjustmentButton);
         
         this.add(functionPanel);
     }
@@ -371,6 +371,52 @@ public class MainScreenAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Product added for sale!");
         });
        
+        adjustmentButton.addActionListener(e ->{
+            //Xoa prod cu
+            String imgPath = "";
+            for (Product product : products){
+                if(product.getName().equals(selectedProd.getName())){
+                    imgPath = product.getImagePath();
+                    products.remove(product);
+                    break;
+                }
+            }
+            System.out.println("After RM: " + products.size());
+            
+            //Them product moi
+            String name = prodNameField.getText();
+            double price = Double.parseDouble(prodPriceField.getText());
+            String size = prodSizeField.getText();
+            int quantity = Integer.parseInt(prodQuantityField.getText());
+            Product TMPproduct = new Product(name, price, quantity, size, quantity, imgPath);
+            productManager.addProduct(user, TMPproduct);
+            products.add(TMPproduct);  // Thêm sản phẩm mới vào danh sách sản phẩm
+            updateProductTable(products);
+            System.out.println("After ADD: " + products.size());
+            
+            //Ghi de file
+            try {
+                File dataFile = new File( new File("src\\main\\java\\gui\\Product.txt").getAbsolutePath());
+                FileWriter writer = new FileWriter(dataFile);
+                
+                for (Product product : products){
+                    String imagePath = product.getImagePath();
+                    String[] tmp = imagePath.split("\\\\");
+                    imagePath = tmp[tmp.length-1];
+                    String s = product.getName()+" "+Double.toString(product.getPrice())+" "+ Integer.toString(product.getQuantity())+" "+ size +" "+ Integer.toString(product.getQuantity())+" "+ imagePath;
+                    writer.write(String.format("\n%s", s));
+                    System.out.println(s);
+                }
+                
+                writer.close();
+                
+                
+            } catch (IOException ex) {
+//                Logger.getLogger(MainScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("After ALL: " + products.size());
+            
+        });
         //Listener for List
         // Get the selection model and set it to single selection mode
         ListSelectionModel selectionModel = productTable.getSelectionModel();
@@ -388,6 +434,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
                         
                         for (Product product : products){
                             if(product.getName().equals(pName)){
+                                selectedProd = product;
                                 prodNameField.setText(pName);
                                 String imgPath = product.getImagePath();
                                 ImageIcon originalIcon = new ImageIcon(imgPath);
@@ -471,6 +518,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){
                 String s = sc.nextLine();
+                if(s.isBlank() || s.isEmpty()) continue;
                 String[]w = s.split("[' ']+");
                 productList.add(new Product(w[0],Double.parseDouble(w[1]),Integer.parseInt(w[2]), w[3],Integer.parseInt(w[4]),w[5]));
             }
