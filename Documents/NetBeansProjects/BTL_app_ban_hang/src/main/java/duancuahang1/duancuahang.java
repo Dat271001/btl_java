@@ -24,15 +24,16 @@ public class duancuahang {
         // TODO code application logic here
 //       login = new LoginForm();
 //        userManager = new UserManager();
-        // mainScreen = new MainScreen(new User("test","test",1000.0), userManager);
+//         mainScreen = new MainScreen(new User("test","test",1000.0), userManager);
+//         mainScreenAdmin = new MainScreenAdmin(new User("Admin","1234",1000.0), userManager);
         
         
-        //Neu loi cmt tu day >> dong 47
+//        //Neu loi cmt tu day >> dong 47
         LoadingScreen loading = new LoadingScreen();
         loading.setVisible(true);
         try{
             for(int i=0; i<=100; i++){
-                Thread.sleep(10);
+                Thread.sleep(100);
                 percentage.setText(Integer.toString(i) + "%");
                 jProgressBar1.setValue(i);
 

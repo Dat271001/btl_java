@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -32,14 +33,228 @@ public class MainScreenAdmin extends javax.swing.JFrame {
 
     private JLabel balanceLabel;
     private JTable productTable;
-    private JTextField searchField;
     private DefaultTableModel tableModel; // Sử dụng DefaultTableModel để quản lý bảng
     public static JLabel depositMenu;
     
-    private Color lightOrange = new Color(248, 87, 55);
-    private Color boldOrange = new Color(228, 67, 35);
-    private Color lightGrey = new Color(235, 235, 235);
-    private Color boldGrey = new Color(224,224,224);
+    JPanel leftPanel, searchPanel, infoPanel, mainPanel, functionPanel;
+    JLabel homePage;
+    JButton accountItem, HistoryItem, depositItem, checkoutButton, sellProductButton, logoutButton;
+    JLabel searchTitle;
+    JTextField searchField;
+    JButton searchButton;
+    JLabel productImage, prodName, prodSize, prodPrice, prodQuantity;
+    JTextField prodNameField, prodSizeField, prodPriceField, prodQuantityField;
+    JButton sortPriceButton1, sortPriceButton2, sortQuantityButton, addToCartButton;
+    Color cBlack = new Color(39, 35, 67);
+    
+    
+    private void UI(){
+        this.setResizable(false);
+
+        setTitle("Main Screen - Welcome " + user.getUsername());
+        setSize(1500,800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null);
+        this.getContentPane().setBackground(Color.WHITE);
+
+        leftPanelUI();
+        searchPanelUI();
+        infoPanelUI();
+        functionPanelUI();
+        mainPanelUI();
+    }
+    
+    private JButton leftPanelCustomButton(String text, int x, int y, JButton button, String path){
+        button = new JButton(text);
+        button.setSize(300,60);
+        button.setLocation(x, y);
+        button.setBackground(cBlack);
+        button.setForeground(Color.WHITE);
+        button.setBorder(new EmptyBorder(5,5,5,5));
+        button.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        ImageIcon originalIcon = new ImageIcon(new File("src\\main\\java\\img\\" + path).getAbsolutePath());
+        Image scaledImage = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        button.setIcon(resizedIcon);
+        return button;
+    }
+    
+    private void leftPanelUI(){
+        leftPanel = new JPanel();
+        leftPanel.setLayout(null);
+        leftPanel.setSize(300,800);
+        leftPanel.setLocation(0,0);
+        leftPanel.setBackground(cBlack);
+        
+        homePage = new JLabel("HOME");
+        homePage.setSize(300,200);
+        homePage.setLocation(0,0);
+        homePage.setFont(new Font("Segoe UI", Font.BOLD, 50));
+        homePage.setForeground(Color.WHITE);
+        homePage.setAlignmentX(Component.CENTER_ALIGNMENT);
+        homePage.setHorizontalAlignment(SwingConstants.CENTER);
+        leftPanel.add(homePage);
+        
+        depositMenu = new JLabel("$: " + user.getBalance());
+        depositMenu.setLocation(0,250);
+        depositMenu.setSize(300,50);
+        depositMenu.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        depositMenu.setForeground(Color.WHITE);
+        ImageIcon originalIcon = new ImageIcon(new File("src\\main\\java\\img\\Cash.jpg").getAbsolutePath());
+        Image scaledImage = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        depositMenu.setIcon(resizedIcon);
+        depositMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        depositMenu.setHorizontalAlignment(SwingConstants.CENTER);
+        leftPanel.add(depositMenu);
+        
+        accountItem = leftPanelCustomButton("Profile", 0, 300, accountItem, "ProfileIcon.jpg");
+        leftPanel.add(accountItem);
+        
+        HistoryItem = leftPanelCustomButton("History", 0, 370, HistoryItem, "History.jpg");
+        leftPanel.add(HistoryItem);
+        
+        depositItem = leftPanelCustomButton("Withdraw $", 0, 440, depositItem, "Cash.jpg");
+        leftPanel.add(depositItem);
+        
+//        checkoutButton = leftPanelCustomButton("Checkout", 0, 510, checkoutButton, "Checkout.jpg");
+//        leftPanel.add(checkoutButton);
+        
+        sellProductButton = leftPanelCustomButton("Sell Product", 0, 510, sellProductButton, "Cart.jpg");
+        leftPanel.add(sellProductButton);
+        
+        logoutButton = leftPanelCustomButton("Log Out", 0, 700, logoutButton, "Logout.jpg");
+        leftPanel.add(logoutButton);
+        
+        this.add(leftPanel);
+    }
+    
+    private void searchPanelUI(){
+        searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        searchPanel.setSize(1500,50);
+        searchPanel.setLocation(300,250);
+        searchPanel.setBackground(Color.ORANGE);
+        
+        searchTitle = new JLabel("Search: ");
+        searchPanel.add(searchTitle);
+        
+        searchField = new JTextField();
+        searchField.setPreferredSize(new Dimension(600,40));
+        searchPanel.add(searchField);
+        
+        searchButton = new JButton("Search");
+        searchPanel.add(searchButton);
+        
+        this.add(searchPanel);
+    }
+    
+    private void infoPanelUI(){
+        productImage = new JLabel("IMG");
+        productImage.setLocation(350,50);
+        productImage.setSize(200,200);
+        this.add(productImage);
+        
+        infoPanel = new JPanel();
+        infoPanel.setLayout(null);
+        infoPanel.setSize(900,250);
+        infoPanel.setLocation(600,0);
+//        infoPanel.setBackground(Color.yellow);
+        
+        prodName = new JLabel("Name:");
+        prodName.setLocation(100,50);
+        prodName.setSize(100,20);
+        infoPanel.add(prodName);
+        
+        prodNameField = new JTextField("Name");
+        prodNameField.setLocation(200,50);
+        prodNameField.setSize(200,20);
+        prodNameField.setEditable(false);
+        infoPanel.add(prodNameField);
+        
+        prodSize = new JLabel("Size:");
+        prodSize.setLocation(100,100);
+        prodSize.setSize(100,20);
+        infoPanel.add(prodSize);
+        
+        prodSizeField = new JTextField("Name");
+        prodSizeField.setLocation(200,100);
+        prodSizeField.setSize(200,20);
+        prodSizeField.setEditable(false);
+        infoPanel.add(prodSizeField);
+        
+        prodPrice = new JLabel("Price:");
+        prodPrice.setLocation(100,150);
+        prodPrice.setSize(100,20);
+        infoPanel.add(prodPrice);
+        
+        prodPriceField = new JTextField("Name");
+        prodPriceField.setLocation(200,150);
+        prodPriceField.setSize(200,20);
+        prodPriceField.setEditable(false);
+        infoPanel.add(prodPriceField);
+        
+        prodQuantity = new JLabel("Quantity:");
+        prodQuantity.setLocation(100,200);
+        prodQuantity.setSize(100,20);
+        infoPanel.add(prodQuantity);
+        
+        prodQuantityField = new JTextField("Name");
+        prodQuantityField.setLocation(200,200);
+        prodQuantityField.setSize(200,20);
+        prodQuantityField.setEditable(false);
+        infoPanel.add(prodQuantityField);
+        
+        
+        
+        this.add(infoPanel);
+    }
+    
+    private void functionPanelUI(){
+        functionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        functionPanel.setSize(1500,50);
+        functionPanel.setLocation(300,300);
+        functionPanel.setBackground(Color.cyan);
+        
+        sortPriceButton1 = new JButton("Sort UP");
+        functionPanel.add(sortPriceButton1);
+        
+        sortPriceButton2 = new JButton("Sort DOWN");
+        functionPanel.add(sortPriceButton2);
+        
+        sortQuantityButton = new JButton("Sort by quantity");
+        functionPanel.add(sortQuantityButton);
+        
+//        addToCartButton = new JButton("Add to cart");
+//        functionPanel.add(addToCartButton);
+        
+        this.add(functionPanel);
+    }
+    
+    private void mainPanelUI(){
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setSize(1200,450);
+        mainPanel.setLocation(300,350);
+        mainPanel.setBackground(Color.red);
+        
+        // Tạo bảng sản phẩm với DefaultTableModel
+        String[] columnNames = {"Product Name", "Price", "Size", "Quantity"};
+        tableModel = new DefaultTableModel(columnNames, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {return false;}
+        };
+        productTable = new JTable(tableModel);
+        productTable.setRowHeight(40);
+        productTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        JTableHeader header = productTable.getTableHeader();
+        productTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        updateProductTable();  // Cập nhật bảng sản phẩm ban đầu
+
+        JScrollPane scrollPane = new JScrollPane(productTable);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        this.add(mainPanel);
+    }
     
      public MainScreenAdmin(User user, UserManager userManager) {
         this.user = user;
@@ -47,159 +262,8 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         this.productManager = new ProductManager(); // Khởi tạo danh sách sản phẩm
         this.products = createProductList(); // Khởi tạo danh sách sản phẩm mẫu
         this.cart = new Cart();  // Khởi tạo giỏ hàng cho người dùng
-        this.setResizable(false);
-
-        setTitle("Main Screen - Welcome Admin");
-        setSize(1500,800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(null);
-        this.getContentPane().setBackground(Color.WHITE);
-
         
-        //1- left Panel
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(null);
-        leftPanel.setSize(300,800);
-        leftPanel.setLocation(0,0);
-        leftPanel.setBackground(Color.blue);
-        
-        JLabel homePage = new JLabel();
-        homePage.setSize(300,200);
-        homePage.setLocation(0,0);
-        leftPanel.add(homePage);
-        
-        depositMenu = new JLabel("$: " + user.getBalance());
-//        JLabel depositMenu = new JLabel("JLABELLLLL");
-        depositMenu.setLocation(0,250);
-        depositMenu.setSize(300,50);
-        leftPanel.add(depositMenu);
-        
-        JButton accountItem = new JButton("Profile");
-        accountItem.setSize(300,50);
-        accountItem.setLocation(0,300);
-        leftPanel.add(accountItem);
-        
-        JButton HistoryItem = new JButton("History");
-        HistoryItem.setSize(300,50);
-        HistoryItem.setLocation(0,350);
-        leftPanel.add(HistoryItem);
-        
-        JButton depositItem = new JButton("WithDraw $");
-        depositItem.setSize(300,50);
-        depositItem.setLocation(0,410);
-        leftPanel.add(depositItem);
-        
-        JButton sellProductButton = new JButton("Sell Prod");
-        sellProductButton.setSize(300,50);
-        sellProductButton.setLocation(0,570);
-        leftPanel.add(sellProductButton);
-        
-        JButton logoutButton = new JButton("Log Out");
-        logoutButton.setSize(300,50);
-        logoutButton.setLocation(0,650);
-        leftPanel.add(logoutButton);
-        
-        this.add(leftPanel);
-        
-        //2- search Panel
-        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
-        searchPanel.setSize(1500,50);
-        searchPanel.setLocation(300,250);
-        searchPanel.setBackground(Color.ORANGE);
-        
-        JLabel searchTitle = new JLabel("Search: ");
-        searchPanel.add(searchTitle);
-        
-        JTextField searchField = new JTextField();
-        searchField.setPreferredSize(new Dimension(600,40));
-        searchPanel.add(searchField);
-        
-        JButton searchButton = new JButton("Search");
-        searchPanel.add(searchButton);
-        
-        this.add(searchPanel);
-        
-//        3- info Panel & Image
-        JLabel productImage = new JLabel("IMG");
-        productImage.setLocation(350,50);
-        productImage.setSize(200,200);
-        this.add(productImage);
-        
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(null);
-        infoPanel.setSize(900,250);
-        infoPanel.setLocation(600,0);
-        infoPanel.setBackground(Color.yellow);
-        
-        JLabel prodName = new JLabel("Name:");
-        prodName.setLocation(100,50);
-        prodName.setSize(100,20);
-        infoPanel.add(prodName);
-        
-        JTextField prodNameField = new JTextField("Name");
-        prodNameField.setLocation(200,50);
-        prodNameField.setSize(200,20);
-        infoPanel.add(prodNameField);
-        
-        JLabel prodSize = new JLabel("Size:");
-        prodSize.setLocation(100,100);
-        prodSize.setSize(100,20);
-        infoPanel.add(prodSize);
-        
-        JTextField prodSizeField = new JTextField("Name");
-        prodSizeField.setLocation(200,100);
-        prodSizeField.setSize(200,20);
-        infoPanel.add(prodSizeField);
-        
-        JLabel prodPrice = new JLabel("Price:");
-        prodPrice.setLocation(100,150);
-        prodPrice.setSize(100,20);
-        infoPanel.add(prodPrice);
-        
-        JTextField prodPriceField = new JTextField("Name");
-        prodPriceField.setLocation(200,150);
-        prodPriceField.setSize(200,20);
-        infoPanel.add(prodPriceField);
-        
-        JLabel prodQuantity = new JLabel("Quantity:");
-        prodQuantity.setLocation(100,200);
-        prodQuantity.setSize(100,20);
-        infoPanel.add(prodQuantity);
-        
-        JTextField prodQuantityField = new JTextField("Name");
-        prodQuantityField.setLocation(200,200);
-        prodQuantityField.setSize(200,20);
-        infoPanel.add(prodQuantityField);
-        
-        
-        
-        this.add(infoPanel);
-        
-        JPanel functionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
-        functionPanel.setSize(1500,50);
-        functionPanel.setLocation(300,300);
-        functionPanel.setBackground(Color.cyan);
-        
-        JButton sortPriceButton1 = new JButton("Sort UP");
-        functionPanel.add(sortPriceButton1);
-        
-        JButton sortPriceButton2 = new JButton("Sort DOWN");
-        functionPanel.add(sortPriceButton2);
-        
-        JButton sortQuantityButton = new JButton("Sort by quantity");
-        functionPanel.add(sortQuantityButton);
-        
-        
-        
-        this.add(functionPanel);
-        
-        //4- Main Panel
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.setSize(1200,450);
-        mainPanel.setLocation(300,350);
-        mainPanel.setBackground(Color.red);
+        UI();
         
         accountItem.addActionListener(e -> {
             AccountScreen accountScreen = new AccountScreen(user, cart,userManager);
@@ -237,24 +301,24 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         });
         
         // Tạo bảng sản phẩm với DefaultTableModel
-        String[] columnNames = {"Product Name", "Price", "Size", "Quantity"};
-        tableModel = new DefaultTableModel(columnNames, 0);
-        productTable = new JTable(tableModel){
-        @Override
-          public boolean isCellEditable(int row, int column) {
-        // Trả về false để không cho phép sửa ô nào trong bảng
-        return false;
-        }
-        };
-        productTable.setRowHeight(40);
-        productTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        JTableHeader header = productTable.getTableHeader();
-        productTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        updateProductTable();  // Cập nhật bảng sản phẩm ban đầu
-
-        JScrollPane scrollPane = new JScrollPane(productTable);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
-        this.add(mainPanel);
+//        String[] columnNames = {"Product Name", "Price", "Size", "Quantity"};
+//        tableModel = new DefaultTableModel(columnNames, 0);
+//        productTable = new JTable(tableModel){
+//        @Override
+//          public boolean isCellEditable(int row, int column) {
+//        // Trả về false để không cho phép sửa ô nào trong bảng
+//        return false;
+//        }
+//        };
+//        productTable.setRowHeight(40);
+//        productTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+//        JTableHeader header = productTable.getTableHeader();
+//        productTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+//        updateProductTable();  // Cập nhật bảng sản phẩm ban đầu
+//
+//        JScrollPane scrollPane = new JScrollPane(productTable);
+//        mainPanel.add(scrollPane, BorderLayout.CENTER);
+//        this.add(mainPanel);
 
         
         // Thêm sự kiện tìm kiếm
