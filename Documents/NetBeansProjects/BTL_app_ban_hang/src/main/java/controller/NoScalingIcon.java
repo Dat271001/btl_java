@@ -40,8 +40,6 @@ public class NoScalingIcon implements Icon
         int locationX = scaleX + offsetX;
         int locationY = scaleY + offsetY;
 
-        //  Reset scaling to 1.0 by concatenating an inverse scale transfom
-
         AffineTransform scaled = AffineTransform.getScaleInstance(1.0 / at.getScaleX(), 1.0 / at.getScaleY());
         at.concatenate( scaled );
         g2d.setTransform( at );
@@ -51,19 +49,10 @@ public class NoScalingIcon implements Icon
         g2d.dispose();
     }
 
-//    public static void main(String[] args)
-//    {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
-//    }
 
     public  void createAndShowGUI()
     {
         JButton button = new JButton();
-//        button.setIcon(new ImageIcon(new File("D:\\New Folder\\BTL_Java\\src\\img\\icons8-home-screen-100.png").getAbsolutePath()));
         button.setSize(100,80);
         button.setBackground(Color.red);
         NoScalingIcon icon = new NoScalingIcon( new ImageIcon(new File("D:\\New Folder\\BTL_Java\\src\\img\\icons8-home-screen-100.png").getAbsolutePath()));

@@ -1,19 +1,13 @@
 package controller;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+
 import model.Product;
 import model.PurchaseHistory;
 
 import javax.swing.JOptionPane;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class Cart {
     private List<Product> products; // Danh sách sản phẩm trong giỏ hàng
@@ -45,9 +39,9 @@ public class Cart {
     }
     public void addProduct(Product product) {
         if (product.getStock() <= 0) {
-            JOptionPane.showMessageDialog(null, "Sản phẩm đã hết hàng!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Out of stock!", "Notification", JOptionPane.ERROR_MESSAGE);
         } else if (product.getQuantity() > product.getStock()) {
-            JOptionPane.showMessageDialog(null, "Số lượng vượt quá hàng tồn kho!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Quantity exceeds stock availability!", "Notification", JOptionPane.ERROR_MESSAGE);
         } else {
      // Kiểm tra xem sản phẩm đã được thêm vào trước hay chưa
             boolean check = false;
@@ -64,7 +58,6 @@ public class Cart {
             if(!check) products.add(product);
             // Sắp xếp sản phẩm theo giá tăng dần
             Collections.sort(products, Comparator.comparingDouble(Product::getPrice));
-            JOptionPane.showMessageDialog(null, "Sản phẩm đã được thêm vào giỏ hàng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -89,17 +82,17 @@ public class Cart {
                 updateStatistics("src\\main\\java\\gui\\Statistics.txt",product.getName(),product.getQuantity(),product.getPrice(),product.getSize(),product.getImagePath(),product.getStock());
             }
             clear(); // Xóa giỏ hàng sau khi thanh toán
-            JOptionPane.showMessageDialog(null, "Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Payment successful!", "Notification", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Giỏ hàng trống!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Your cart is empty!", "Notification", JOptionPane.WARNING_MESSAGE);
         }
     }
     // Xóa sản phẩm khỏi giỏ hàng với xác nhận từ người dùng
     public void removeProduct(Product product) {
-        int response = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this item from the cart?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.YES_OPTION) {
             products.remove(product);
-            JOptionPane.showMessageDialog(null, "Sản phẩm đã được xóa khỏi giỏ hàng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The product has been removed from the cart!", "Notification", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

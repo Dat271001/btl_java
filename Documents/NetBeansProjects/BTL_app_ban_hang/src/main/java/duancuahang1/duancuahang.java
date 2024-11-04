@@ -4,13 +4,13 @@
  */
 package duancuahang1;
 
-import gui.LoginForm;
-import gui.MainScreenAdmin;
-import gui.MainScreen;
+import view.LoginForm;
+import view.MainScreenAdmin;
+import view.MainScreen;
 import controller.UserManager;
-import gui.LoadingScreen;
-import static gui.LoadingScreen.jProgressBar1;
-import static gui.LoadingScreen.percentage;
+import view.LoadingScreen;
+import static view.LoadingScreen.jProgressBar1;
+import static view.LoadingScreen.percentage;
 import java.io.FileNotFoundException;
 import model.User;
 
@@ -21,14 +21,7 @@ public class duancuahang {
     public static MainScreen mainScreen;
     public static MainScreenAdmin mainScreenAdmin;
     public static void main(String[] args) throws FileNotFoundException {
-        // TODO code application logic here
-//       login = new LoginForm();
-//        userManager = new UserManager();
-//         mainScreen = new MainScreen(new User("test","test",1000.0), userManager);
-//         mainScreenAdmin = new MainScreenAdmin(new User("Admin","1234",1000.0), userManager);
         
-        
-//        //Neu loi cmt tu day >> dong 47
         LoadingScreen loading = new LoadingScreen();
         loading.setVisible(true);
         try{
@@ -46,9 +39,7 @@ public class duancuahang {
         } catch(Exception e){
 
         }
-        
-        // END o day
-        
+       
         login = new LoginForm();
         userManager = new UserManager();
     }
