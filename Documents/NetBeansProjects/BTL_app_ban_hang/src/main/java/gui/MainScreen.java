@@ -35,6 +35,8 @@ public class MainScreen extends javax.swing.JFrame {
     private JTextField searchField;
     private DefaultTableModel tableModel; // Sử dụng DefaultTableModel để quản lý bảng
 
+    public static JLabel depositMenu;
+            
     private Color lightOrange = new Color(248, 87, 55);
     private Color boldOrange = new Color(228, 67, 35);
     private Color lightGrey = new Color(235, 235, 235);
@@ -68,7 +70,7 @@ public class MainScreen extends javax.swing.JFrame {
         homePage.setLocation(0,0);
         leftPanel.add(homePage);
         
-        JLabel depositMenu = new JLabel("$: " + user.getBalance());
+        depositMenu = new JLabel("$: " + user.getBalance());
 //        JLabel depositMenu = new JLabel("JLABELLLLL");
         depositMenu.setLocation(0,250);
         depositMenu.setSize(300,50);

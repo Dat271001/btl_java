@@ -8,20 +8,20 @@ import model.User;
 import java.io.*;
 import javax.swing.*;
 import java.awt.*;
-import gui.MainScreen.*;
+import gui.MainScreenAdmin.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class QRCodeScreen extends JFrame {
+public class Withdraw extends JFrame {
     private User user;
 
-    public QRCodeScreen(User user){
+    public Withdraw(User user){
         this.user = user;
 
-        setTitle("Deposit Money");
+        setTitle("Withdraw Money");
         setSize(300, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -51,13 +51,10 @@ public class QRCodeScreen extends JFrame {
         inputPanel.add(accountField);
 
         // Thêm combo box chọn số tiền
-        JLabel amountLabel = new JLabel("Deposit Amount:");
-        JComboBox<String> amountComboBox = new JComboBox<>(new String[]{"100", "200", "500", "1000"});
-        inputPanel.add(amountLabel);
-        inputPanel.add(amountComboBox);
-        
-        
-        
+        JLabel amountTitle = new JLabel("Account Number:");
+        JTextField amountField = new JTextField();
+        inputPanel.add(amountTitle);
+        inputPanel.add(amountField);
 
         // Thêm nút xác nhận nạp
         
@@ -66,7 +63,7 @@ public class QRCodeScreen extends JFrame {
         
         confirmButton.addActionListener(e -> {
         
-            String depositAmount = (String) amountComboBox.getSelectedItem();
+            double depositAmount = (double) Double.parseDouble(amountField.getText());
         String selectedBank = (String) bankComboBox.getSelectedItem();
         String accountNumber = accountField.getText();
         
@@ -74,13 +71,20 @@ public class QRCodeScreen extends JFrame {
             JOptionPane.showMessageDialog(this, "Please enter your account number.");
         }else{
 
-              JOptionPane.showMessageDialog(this, "Deposit Successful:\n"
+              
+              
+              if(user.deductBalance(depositAmount)){
+                  JOptionPane.showMessageDialog(this, "Deposit Successful:\n"
                 + "Bank: " + selectedBank + "\n"
                 + "Account: " + accountNumber + "\n"
                 + "Amount: " + depositAmount);
+                  System.out.println(depositAmount);
+//                  user.deductBalance(depositAmount);
+                  MainScreenAdmin.depositMenu.setText("$: " + user.getBalance());
+              } else{
+                  JOptionPane.showMessageDialog(this, "Not enough money !");
+              };
               
-              user.addBalance(Double.parseDouble(depositAmount));
-                MainScreen.depositMenu.setText("$: " + user.getBalance());
         }
         });
         inputPanel.add(new JLabel()); // Thêm một ô trống để căn nút vào giữa

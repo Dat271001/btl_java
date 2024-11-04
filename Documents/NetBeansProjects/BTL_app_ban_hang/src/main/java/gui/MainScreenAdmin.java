@@ -9,6 +9,7 @@ import model.*;
 import model.PurchaseHistory;
 
 import static duancuahang1.duancuahang.userManager;
+//import static gui.MainScreen.depositMenu;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,7 +34,8 @@ public class MainScreenAdmin extends javax.swing.JFrame {
     private JTable productTable;
     private JTextField searchField;
     private DefaultTableModel tableModel; // Sử dụng DefaultTableModel để quản lý bảng
-
+    public static JLabel depositMenu;
+    
     private Color lightOrange = new Color(248, 87, 55);
     private Color boldOrange = new Color(228, 67, 35);
     private Color lightGrey = new Color(235, 235, 235);
@@ -67,7 +69,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         homePage.setLocation(0,0);
         leftPanel.add(homePage);
         
-        JLabel depositMenu = new JLabel("$: " + user.getBalance());
+        depositMenu = new JLabel("$: " + user.getBalance());
 //        JLabel depositMenu = new JLabel("JLABELLLLL");
         depositMenu.setLocation(0,250);
         depositMenu.setSize(300,50);
@@ -83,7 +85,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         HistoryItem.setLocation(0,350);
         leftPanel.add(HistoryItem);
         
-        JButton depositItem = new JButton("Deposit$");
+        JButton depositItem = new JButton("WithDraw $");
         depositItem.setSize(300,50);
         depositItem.setLocation(0,410);
         leftPanel.add(depositItem);
@@ -205,8 +207,11 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         });
 //         Tạo menu Nạp tiền
         depositItem.addActionListener(e -> {
-            QRCodeScreen qrCodeScreen = new QRCodeScreen(user);
-            qrCodeScreen.setVisible(true);
+            Withdraw withdraw = new Withdraw(user);
+            withdraw.setVisible(true);
+            
+//               Khi QRCodeScreen đóng, cập nhật lại text của depositMenu
+            depositMenu.setText("$: " + user.getBalance());
         });
 //        depositMenu.add(depositItem);
 
