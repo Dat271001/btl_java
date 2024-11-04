@@ -256,7 +256,7 @@ public class MainScreen extends javax.swing.JFrame {
         
         
         // Tạo bảng sản phẩm với DefaultTableModel
-        String[] columnNames = {"Product Image", "Product Name", "Price", "Size", "Quantity"};
+        String[] columnNames = {"Product Name", "Price", "Size", "Quantity"};
         tableModel = new DefaultTableModel(columnNames, 0){
         @Override
           public boolean isCellEditable(int row, int column) {
@@ -403,16 +403,24 @@ public class MainScreen extends javax.swing.JFrame {
                 if (!event.getValueIsAdjusting()) {
                     int selectedRow = productTable.getSelectedRow();
                     if (selectedRow != -1) { // Ensure a row is selected
-                        String imgPath = (String) productTable.getValueAt(selectedRow, 0);
-                        ImageIcon originalIcon = new ImageIcon(imgPath);
-                        Image scaledImage = originalIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                        ImageIcon resizedIcon = new ImageIcon(scaledImage);
                         
-                        productImage.setIcon(resizedIcon);
-                        prodNameField.setText( (String) productTable.getValueAt(selectedRow, 1));
-                        prodPriceField.setText("" + (double) productTable.getValueAt(selectedRow, 2) );
-                        prodSizeField.setText((String) productTable.getValueAt(selectedRow, 3));
-                        prodQuantityField.setText( "" + (int) productTable.getValueAt(selectedRow, 4));
+                        String pName = (String) productTable.getValueAt(selectedRow, 0);
+                        
+                        for (Product product : products){
+                            if(product.getName().equals(pName)){
+                                prodNameField.setText(pName);
+                                String imgPath = product.getImagePath();
+                                ImageIcon originalIcon = new ImageIcon(imgPath);
+                                Image scaledImage = originalIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                                ImageIcon resizedIcon = new ImageIcon(scaledImage);
+
+                                productImage.setIcon(resizedIcon);
+                                prodPriceField.setText("" + (double) productTable.getValueAt(selectedRow, 1) );
+                                prodSizeField.setText((String) productTable.getValueAt(selectedRow, 2));
+                                prodQuantityField.setText( "" + (int) productTable.getValueAt(selectedRow, 3));
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -480,7 +488,7 @@ public class MainScreen extends javax.swing.JFrame {
         for (Product product : products) {
             tableModel.addRow(new Object[]{
 //                null,  // Có thể thêm hình ảnh ở đây nếu cần
-                product.getImagePath(),
+//                product.getImagePath(),
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),
@@ -493,7 +501,7 @@ public class MainScreen extends javax.swing.JFrame {
         for (Product product : filteredProducts) {
             tableModel.addRow(new Object[]{
 //                null,  // Có thể thêm hình ảnh ở đây nếu cần
-                product.getImagePath(),
+//                product.getImagePath(),
                 product.getName(),
                 product.getPrice(),
                 product.getSize(),

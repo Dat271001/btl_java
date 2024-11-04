@@ -146,17 +146,21 @@ public class SignUpForm extends JFrame{
         signUpButton.addActionListener(e ->{
             String username = userNameField.getText();
             String pass = passwordField.getText();
+            String confirm = confirmField.getText();
 //            System.out.println(username + " -- " + pass);
-            
-            boolean checkFlag = duancuahang.userManager.AccountCheck(username, pass);
-            if(checkFlag) JOptionPane.showMessageDialog(null, "Account existed!");
-            else{
-                try {
-                    duancuahang.userManager.AddAccount(username, pass);
-                } catch (IOException ex) {
-//                    Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+            if(!pass.equals(confirm)){
+                JOptionPane.showMessageDialog(this, "Password does not match!");
+            } else{
+                boolean checkFlag = duancuahang.userManager.AccountCheck(username, pass);
+                if(checkFlag) JOptionPane.showMessageDialog(this, "Account existed!");
+                else{
+                    try {
+                        duancuahang.userManager.AddAccount(username, pass);
+                    } catch (IOException ex) {
+    //                    Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(this, "Sign Up successful!");
                 }
-                JOptionPane.showMessageDialog(null, "Sign Up successful!");
             }
         });
         

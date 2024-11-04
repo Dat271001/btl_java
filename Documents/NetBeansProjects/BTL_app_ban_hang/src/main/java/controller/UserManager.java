@@ -35,8 +35,8 @@ public class UserManager {
         if(username.isBlank() && pass.isBlank()) return ;
         FileWriter myWriter = new FileWriter(accountFile,true);
 //        accList.add(new User(username, pass,1000.0));
-        users.put(username,new User(username, pass,1000.0));
-        myWriter.write(String.format("\n%s %s", username, pass));
+        users.put(username,new User(username, pass,0.0));
+        myWriter.write(String.format("\n%s %s %.2f", username, pass, 0.0));
         myWriter.close();
 //        System.out.println("Done");
     }
