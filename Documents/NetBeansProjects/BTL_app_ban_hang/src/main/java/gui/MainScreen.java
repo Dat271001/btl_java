@@ -351,7 +351,7 @@ public class MainScreen extends javax.swing.JFrame {
                 if (user.deductBalance(totalAmount)) {
                     cart.checkout();  // Cập nhật lịch sử mua hàng
                     JOptionPane.showMessageDialog(null, "Checkout successful! Total: $" + totalAmount);
-//Tam thoi cmt                    depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
+                    depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
                     updateBalanceToFile(user.getUsername(),user.getPassword(),user.getBalance(), "src\\main\\java\\controller\\Accs.txt",totalAmount);
                     for(Product product: products){
                         updateProduct("src\\main\\java\\gui\\Product.txt",product.getQuantity()-product.getQuantity_Sold(),product.getName());
