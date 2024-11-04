@@ -54,7 +54,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        this.getContentPane().setBackground(Color.WHITE);
+//        this.getContentPane().setBackground(Color.WHITE);
 
         leftPanelUI();
         searchPanelUI();
@@ -85,13 +85,17 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         leftPanel.setLocation(0,0);
         leftPanel.setBackground(cBlack);
         
-        homePage = new JLabel("HOME");
+        homePage = new JLabel();
         homePage.setSize(300,200);
         homePage.setLocation(0,0);
-        homePage.setFont(new Font("Segoe UI", Font.BOLD, 50));
-        homePage.setForeground(Color.WHITE);
+        ImageIcon originalIcon = new ImageIcon(new File("src\\main\\java\\img\\MAIN.png").getAbsolutePath());
+        Image scaledImage = originalIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+//        homePage.setFont(new Font("Segoe UI", Font.BOLD, 50));
+//        homePage.setForeground(Color.WHITE);
         homePage.setAlignmentX(Component.CENTER_ALIGNMENT);
         homePage.setHorizontalAlignment(SwingConstants.CENTER);
+        homePage.setIcon(resizedIcon);
         leftPanel.add(homePage);
         
         depositMenu = new JLabel("$: " + user.getBalance());
@@ -99,9 +103,9 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         depositMenu.setSize(300,50);
         depositMenu.setFont(new Font("Segoe UI", Font.BOLD, 20));
         depositMenu.setForeground(Color.WHITE);
-        ImageIcon originalIcon = new ImageIcon(new File("src\\main\\java\\img\\Cash.jpg").getAbsolutePath());
-        Image scaledImage = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+         originalIcon = new ImageIcon(new File("src\\main\\java\\img\\Cash.jpg").getAbsolutePath());
+         scaledImage = originalIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+         resizedIcon = new ImageIcon(scaledImage);
         depositMenu.setIcon(resizedIcon);
         depositMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
         depositMenu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -126,12 +130,15 @@ public class MainScreenAdmin extends javax.swing.JFrame {
     }
     
     private void searchPanelUI(){
-        searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+         searchPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 100, 5));
         searchPanel.setSize(1500,50);
         searchPanel.setLocation(300,250);
-        searchPanel.setBackground(Color.ORANGE);
+//        searchPanel.setBackground(cBlack);
+        searchPanel.setBackground(new Color(186, 232, 232));
         
         searchTitle = new JLabel("Search: ");
+        searchTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        searchTitle.setForeground(Color.white);
         searchPanel.add(searchTitle);
         
         searchField = new JTextField();
@@ -145,15 +152,16 @@ public class MainScreenAdmin extends javax.swing.JFrame {
     }
     
     private void infoPanelUI(){
-        productImage = new JLabel("IMG");
-        productImage.setLocation(350,50);
-        productImage.setSize(200,200);
+        productImage = new JLabel();
+        productImage.setLocation(300,50);
+        productImage.setSize(300,250);
         this.add(productImage);
         
         infoPanel = new JPanel();
         infoPanel.setLayout(null);
         infoPanel.setSize(900,250);
         infoPanel.setLocation(600,0);
+//        infoPanel.setBackground(cBlack);
         
         prodName = new JLabel("Name:");
         prodName.setLocation(100,50);
@@ -201,10 +209,11 @@ public class MainScreenAdmin extends javax.swing.JFrame {
     }
     
     private void functionPanelUI(){
-        functionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        functionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 150, 5));
         functionPanel.setSize(1500,50);
         functionPanel.setLocation(300,300);
-        functionPanel.setBackground(Color.cyan);
+        functionPanel.setBackground(cBlack);
+        functionPanel.setBackground(new Color(186, 232, 232));
         
         sortPriceButton1 = new JButton("Sort up");
         functionPanel.add(sortPriceButton1);

@@ -15,7 +15,7 @@ public class PurchaseHistoryScreen extends JFrame {
         this.cart = cart;
 
         setTitle("Purchase History");
-        setSize(800, 600); // Tăng kích thước để phù hợp với hình ảnh
+        setSize(800, 600); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -24,42 +24,38 @@ public class PurchaseHistoryScreen extends JFrame {
 
         List<PurchaseHistory> purchaseHistories = cart.getPurchaseHistories();
         for (PurchaseHistory history : purchaseHistories) {
-            StringBuilder details = new StringBuilder();
-            details.append("Date: ").append(history.getPurchaseDate()).append("\n");
-            details.append("Total Amount: $").append(history.getTotalAmount()).append("\n");
-            details.append("Purchased Products:\n");
-
             // Tạo panel cho từng lịch sử mua hàng
             JPanel historyPanel = new JPanel();
-            historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
+            historyPanel.setLayout(new BorderLayout());
+            historyPanel.setBorder(BorderFactory.createTitledBorder("Date: " + history.getPurchaseDate()));
 
+            // Thông tin tổng số tiền
+            JLabel totalAmountLabel = new JLabel("Total Amount: $" + history.getTotalAmount());
+            totalAmountLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            historyPanel.add(totalAmountLabel, BorderLayout.NORTH);
+
+            // Tạo bảng cho các sản phẩm đã mua
+            String[] columnNames = {"Product Name", "Quantity", "Price", "Total Price"};
+            Object[][] data = new Object[history.getPurchasedProducts().size()][4];
+
+            int index = 0;
             for (Product product : history.getPurchasedProducts()) {
-                // Tạo panel cho mỗi sản phẩm
-                JPanel productPanel = new JPanel();
-                productPanel.setLayout(new BorderLayout());
-                
-                // Hiển thị hình ảnh sản phẩm
-                JLabel imageLabel = new JLabel();
-                ImageIcon productImage = new ImageIcon(product.getImagePath()); // Đường dẫn tới hình ảnh
-                Image scaledImage = productImage.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-                imageLabel.setIcon(new ImageIcon(scaledImage));
-                
-                // Hiển thị tên và giá sản phẩm
-                JLabel productDetailsLabel = new JLabel(product.getName() + " - $" + product.getPrice());
-                
-                // Thêm các thành phần vào productPanel
-                productPanel.add(imageLabel, BorderLayout.WEST);
-                productPanel.add(productDetailsLabel, BorderLayout.CENTER);
+                int quantity = product.getQuantity(); // Giả sử bạn có phương thức getQuantity trong Product
+                double totalPrice = quantity * product.getPrice();
 
-                // Thêm productPanel vào historyPanel
-                historyPanel.add(productPanel);
+                data[index][0] = product.getName();
+                data[index][1] = quantity;
+                data[index][2] = "$" + product.getPrice();
+                data[index][3] = "$" + totalPrice;
+                index++;
             }
 
-            // Thêm chi tiết lịch sử mua hàng vào panel chính
-            JTextArea textArea = new JTextArea(details.toString());
-            textArea.setEditable(false);
-            historyPanel.add(textArea);
+            JTable productTable = new JTable(data, columnNames);
+            productTable.setFillsViewportHeight(true);
+            JScrollPane scrollPane = new JScrollPane(productTable);
+            historyPanel.add(scrollPane, BorderLayout.CENTER);
 
+            // Thêm historyPanel vào panel chính
             panel.add(historyPanel);
         }
 
