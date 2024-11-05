@@ -146,14 +146,18 @@ public class SignUpForm extends JFrame{
                 JOptionPane.showMessageDialog(this, "Password does not match!");
             } else{
                 boolean checkFlag = Main.userManager.AccountCheck(username, pass);
-                if(checkFlag) JOptionPane.showMessageDialog(this, "Account existed!");
+                if(pass.length()<6) JOptionPane.showMessageDialog(this, "Password must longer than 6 characters!");
                 else{
-                    try {
-                        Main.userManager.AddAccount(username, pass);
-                    } catch (IOException ex) {
+                    if(checkFlag) JOptionPane.showMessageDialog(this, "Account existed!");
+                    else{
+                        try {
+                            Main.userManager.AddAccount(username, pass);
+                        } catch (IOException ex) {
+                        }
+                        JOptionPane.showMessageDialog(this, "Sign Up successful!");
                     }
-                    JOptionPane.showMessageDialog(this, "Sign Up successful!");
                 }
+                
             }
         });
         

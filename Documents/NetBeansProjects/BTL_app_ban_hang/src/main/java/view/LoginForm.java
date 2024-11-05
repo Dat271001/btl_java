@@ -128,8 +128,6 @@ public class LoginForm extends JFrame{
             boolean check = Main.userManager.AdminCheck(username, pass);;
             if(checkFlag&&!check) {
                 JOptionPane.showMessageDialog(null, "Login user successful!");
-//                String info = Main.userManager.GetInfo(username);
-//                System.out.println(info);
                 User user= userManager.GetUser(username);
                 Main.mainScreen = new MainScreen(user, userManager);
                 this.dispose();
@@ -137,8 +135,6 @@ public class LoginForm extends JFrame{
             else{
             if(check) {
                 JOptionPane.showMessageDialog(null, "Login admin successful!");
-//                String info = Main.userManager.GetInfo(username);
-//                System.out.println(info);
                 User user= userManager.GetUser(username);
                 Main.mainScreenAdmin = new MainScreenAdmin(user, userManager);
                 this.dispose();

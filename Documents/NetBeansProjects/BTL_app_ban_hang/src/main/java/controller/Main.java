@@ -26,7 +26,7 @@ public class Main {
         loading.setVisible(true);
         try{
             for(int i=0; i<=100; i++){
-                Thread.sleep(10);
+                Thread.sleep(50);
                 percentage.setText(Integer.toString(i) + "%");
                 jProgressBar1.setValue(i);
 

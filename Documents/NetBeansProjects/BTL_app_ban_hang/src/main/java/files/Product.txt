@@ -1,7 +1,18 @@
-Jeans 39.0 1 X 1 longpant1.jpg
-T-shirt 19.0 2 X 2 shirt1.jpg
-Tất 1.0 13 X 15 short1.jpg
-Cai_Giay_012 59.0 17 X 17 sneaker1.jpg
-AoA 12.0 19 X 19 shirt2.jpg
-Ao_Phong 32.0 26 X 26 sneaker2.jpg
-jacket 12.0 3 X 3 imgpants
+JeansPolo 39.0 10 XL 10 longpant1.jpg
+JeansHM 30.0 13 L 13 longpant2.jpg
+JeansSSR 43.0 15 XXL 15 longpant3.jpg
+TokyoLifeNike 59.0 17 43 17 sneaker1.jpg
+RunningMan 114.0 17 40 17 sneaker2.jpg
+SneakerVM4 80.0 19 44 19 sneaker3.jpg
+White_Collar 23.0 13 M 13 shirt1.jpg
+T-shirt 19.0 2 L 2 shirt2.jpg
+jacket 12.0 3 XL 3 shirt3.jpg
+SandalsRv1 14.0 3 40 3 sandals1.jpg
+SandalsRv2 17.0 3 42 3 sandals2.jpg
+Short 18.0 5 M 5 short2.jpg
+JeansPolo 39.0 10 L 10 longpant1.jpg
+JeansHM 30.0 13 XL 13 longpant2.jpg
+JeansSSR 43.0 15 M 15 longpant3.jpg
+
+
+

@@ -70,16 +70,12 @@ public class Withdraw extends JFrame {
         if (accountNumber.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter your account number.");
         }else{
-
-              
-              
               if(user.deductBalance(depositAmount)){
                   JOptionPane.showMessageDialog(this, "Deposit Successful:\n"
                 + "Bank: " + selectedBank + "\n"
                 + "Account: " + accountNumber + "\n"
                 + "Amount: " + depositAmount);
                   System.out.println(depositAmount);
-//                  user.deductBalance(depositAmount);
                   MainScreenAdmin.depositMenu.setText("$: " + user.getBalance());
                   
                   ArrayList<String> lines = new ArrayList<>();
@@ -117,8 +113,6 @@ public class Withdraw extends JFrame {
         add(mainPanel);
         setVisible(true);
         // Cập nhật lại số tiền sau khi nạp
-        
-        
         
         // Thêm mã QR
         JLabel qrLabel = new JLabel(new ImageIcon("src\\main\\java\\img\\QR code.jpg")); // Đường dẫn đến ảnh mã QR của bạn

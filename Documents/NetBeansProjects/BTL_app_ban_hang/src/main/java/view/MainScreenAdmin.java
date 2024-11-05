@@ -54,7 +54,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-//        this.getContentPane().setBackground(Color.WHITE);
 
         leftPanelUI();
         searchPanelUI();
@@ -91,8 +90,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         ImageIcon originalIcon = new ImageIcon(new File("src\\main\\java\\img\\MAIN.png").getAbsolutePath());
         Image scaledImage = originalIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
-//        homePage.setFont(new Font("Segoe UI", Font.BOLD, 50));
-//        homePage.setForeground(Color.WHITE);
         homePage.setAlignmentX(Component.CENTER_ALIGNMENT);
         homePage.setHorizontalAlignment(SwingConstants.CENTER);
         homePage.setIcon(resizedIcon);
@@ -133,7 +130,6 @@ public class MainScreenAdmin extends javax.swing.JFrame {
          searchPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 100, 5));
         searchPanel.setSize(1500,50);
         searchPanel.setLocation(300,250);
-//        searchPanel.setBackground(cBlack);
         searchPanel.setBackground(new Color(186, 232, 232));
         
         searchTitle = new JLabel("Search: ");
@@ -152,55 +148,58 @@ public class MainScreenAdmin extends javax.swing.JFrame {
     }
     
     private void infoPanelUI(){
-        productImage = new JLabel();
-        productImage.setLocation(300,50);
-        productImage.setSize(300,250);
+             productImage = new JLabel();
+        productImage.setLocation(325,25);
+        productImage.setSize(250,250);
         this.add(productImage);
         
         infoPanel = new JPanel();
         infoPanel.setLayout(null);
         infoPanel.setSize(900,250);
         infoPanel.setLocation(600,0);
-//        infoPanel.setBackground(cBlack);
         
         prodName = new JLabel("Name:");
-        prodName.setLocation(100,50);
+        prodName.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        prodName.setLocation(150,50);
         prodName.setSize(100,20);
         infoPanel.add(prodName);
         
         prodNameField = new JTextField("Name");
-        prodNameField.setLocation(200,50);
-        prodNameField.setSize(200,20);
+        prodNameField.setLocation(250,50);
+        prodNameField.setSize(200,25);
         infoPanel.add(prodNameField);
         
         prodSize = new JLabel("Size:");
-        prodSize.setLocation(100,100);
+        prodSize.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        prodSize.setLocation(150,100);
         prodSize.setSize(100,20);
         infoPanel.add(prodSize);
         
         prodSizeField = new JTextField("Name");
-        prodSizeField.setLocation(200,100);
-        prodSizeField.setSize(200,20);
+        prodSizeField.setLocation(250,100);
+        prodSizeField.setSize(200,25);
         infoPanel.add(prodSizeField);
         
         prodPrice = new JLabel("Price:");
-        prodPrice.setLocation(100,150);
+        prodPrice.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        prodPrice.setLocation(150,150);
         prodPrice.setSize(100,20);
         infoPanel.add(prodPrice);
         
         prodPriceField = new JTextField("Name");
-        prodPriceField.setLocation(200,150);
-        prodPriceField.setSize(200,20);
+        prodPriceField.setLocation(250,150);
+        prodPriceField.setSize(200,25);
         infoPanel.add(prodPriceField);
         
         prodQuantity = new JLabel("Quantity:");
-        prodQuantity.setLocation(100,200);
+        prodQuantity.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        prodQuantity.setLocation(150,200);
         prodQuantity.setSize(100,20);
         infoPanel.add(prodQuantity);
         
         prodQuantityField = new JTextField("Name");
-        prodQuantityField.setLocation(200,200);
-        prodQuantityField.setSize(200,20);
+        prodQuantityField.setLocation(250,200);
+        prodQuantityField.setSize(200,25);
         infoPanel.add(prodQuantityField);
         
         
@@ -377,9 +376,8 @@ public class MainScreenAdmin extends javax.swing.JFrame {
                     String imagePath = product.getImagePath();
                     String[] tmp = imagePath.split("\\\\");
                     imagePath = tmp[tmp.length-1];
-                    String s = product.getName()+" "+Double.toString(product.getPrice())+" "+ Integer.toString(product.getQuantity())+" "+ size +" "+ Integer.toString(product.getQuantity())+" "+ imagePath;
+                    String s = product.getName()+" "+Double.toString(product.getPrice())+" "+ Integer.toString(product.getQuantity())+" "+ product.getSize() +" "+ Integer.toString(product.getQuantity())+" "+ imagePath;
                     writer.write(String.format("\n%s", s));
-                    System.out.println(s);
                 }
                 
                 writer.close();
