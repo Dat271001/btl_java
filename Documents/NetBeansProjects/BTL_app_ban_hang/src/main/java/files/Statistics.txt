@@ -1,4 +1,4 @@
-Tất 1.0 7 Dài 25 null
+Tất 1.0 14 Dài 25 null
 Ao 12.0 10 XL 27 null
-T-shirt 19.0 2 M 4 null
-Jeans 39.0 1 X 1 C:\Users\HP\btl_java\Documents\NetBeansProjects\BTL_app_ban_hang\src\main\java\img\null
+T-shirt 19.0 5 M 4 null
+Jeans 39.0 2 X 1 C:\Users\HP\btl_java\Documents\NetBeansProjects\BTL_app_ban_hang\src\main\java\img\null

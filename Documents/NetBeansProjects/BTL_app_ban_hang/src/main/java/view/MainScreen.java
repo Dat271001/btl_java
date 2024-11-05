@@ -459,11 +459,15 @@ public class MainScreen extends javax.swing.JFrame {
             while(sc.hasNextLine()){
                 String x = sc.nextLine();
 //                if(x.startsWith(s)) {
-                if(!x.isBlank() && !x.isBlank()) {
-                    String[]w = x.split("[' ']+");
-                    x = w[0]+" "+w[1]+" "+Integer.toString(quantity)+" "+w[3]+" "+w[4]+" " +w[5];
+                if (!x.isBlank()) {
+                    String[] w = x.split("[' ']+");
+                    if (w[0].equals(name)) { // Kiểm tra tên sản phẩm
+                        x = w[0] + " " + w[1] + " " + Integer.toString(quantity) + " " + w[3] + " " + w[4] + " " + w[5];
+                    }
+                    lines.add(x);
+                    System.out.println(x);
                 }
-                lines.add(x);
+                
             }
             sc.close();
         }catch(FileNotFoundException e){

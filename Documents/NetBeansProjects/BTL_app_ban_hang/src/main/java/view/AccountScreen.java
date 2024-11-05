@@ -15,6 +15,7 @@ public class AccountScreen extends JFrame {
     private Cart cart; // Khai báo biến cart
     private UserManager userManager; // Khai báo biến UserManager
     private JTextField addressField, phoneField;
+    private JLabel soldProductsLabel, revenueLabel;
 
     // Thay đổi hàm khởi tạo để nhận thêm tham số Cart và UserManager
     public AccountScreen(User user, Cart cart, UserManager userManager) {
@@ -28,7 +29,7 @@ public class AccountScreen extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Giao diện chính
-        JPanel mainPanel = new JPanel(new GridLayout(5, 2)); // Thay đổi số hàng ở đây
+        JPanel mainPanel = new JPanel(new GridLayout(6, 2));
 
         // Tên tài khoản
         mainPanel.add(new JLabel("Username:"));
@@ -44,6 +45,23 @@ public class AccountScreen extends JFrame {
         phoneField = new JTextField(user.getPhone() == null ? "" : user.getPhone()); // Hiển thị số điện thoại nếu có
         mainPanel.add(phoneField);
 
+        // Số sản phẩm đã bán
+        soldProductsLabel = new JLabel("Sold Products: " + cart.getTotalProductsSold());
+        mainPanel.add(soldProductsLabel);
+
+        // Doanh thu
+        revenueLabel = new JLabel("Revenue: $" + cart.getTotalRevenue());
+        mainPanel.add(revenueLabel);
+
+        if (userManager.AdminCheck(user.getUsername(), user.getPassword())) {
+            soldProductsLabel.setVisible(true);
+            revenueLabel.setVisible(true);
+
+        } else{
+            soldProductsLabel.setVisible(false);
+            revenueLabel.setVisible(false);
+        }
+                 
         // Nút Cập nhật
         JButton updateButton = new JButton("Update Information");
         updateButton.addActionListener(new ActionListener() {
@@ -83,4 +101,7 @@ public class AccountScreen extends JFrame {
         add(mainPanel);
         setVisible(true);
     }
-}
+    
+    }
+
+    

@@ -18,18 +18,15 @@ public class LoginForm extends JFrame{
     ImageIcon logo = new ImageIcon(scaledImage);
     
     public LoginForm() throws HeadlessException {
-//        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 450);
         this.setTitle("BTL_Java");
         this.setLocationRelativeTo(null);
         this.setLayout(null);
-//        this.getContentPane().setBackground(Color.white);
         
         //image
         image = new JLabel();
         image.setVisible(true);
-//        image.setText("JLabel");
         image.setBackground(new Color(39, 35, 67));
         image.setOpaque(true);
         image.setSize(400, 450);

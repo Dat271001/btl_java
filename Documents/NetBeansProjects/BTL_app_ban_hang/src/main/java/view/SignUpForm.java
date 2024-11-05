@@ -22,7 +22,6 @@ public class SignUpForm extends JFrame{
     ImageIcon logo = new ImageIcon(scaledImage);
     
     public SignUpForm() throws HeadlessException {
-//        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 450);
         this.setTitle("BTL_Java");
