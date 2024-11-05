@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package duancuahang1;
+package controller;
 
 import view.LoginForm;
 import view.MainScreenAdmin;
@@ -14,7 +14,7 @@ import static view.LoadingScreen.percentage;
 import java.io.FileNotFoundException;
 import model.User;
 
-public class duancuahang {
+public class Main {
 
     public static LoginForm login;
     public static UserManager userManager;

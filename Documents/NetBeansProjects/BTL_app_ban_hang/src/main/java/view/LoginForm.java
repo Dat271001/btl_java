@@ -1,12 +1,12 @@
 
 package view;
 //import java.awt.Color;
+import controller.Main;
 import controller.*;
 import java.awt.*;
 import java.awt.HeadlessException;
 import javax.swing.*;
-import duancuahang1.*;
-import static duancuahang1.duancuahang.*;
+import static controller.Main.*;
 import java.io.File;
 import java.io.IOException;
 import model.*;
@@ -127,23 +127,23 @@ public class LoginForm extends JFrame{
         loginButton.addActionListener(e ->{
             String username = userNameField.getText();
             String pass = new String(passwordField.getPassword());
-            boolean checkFlag = duancuahang.userManager.PasswordCheck(username, pass);
-            boolean check = duancuahang.userManager.AdminCheck(username, pass);;
+            boolean checkFlag = Main.userManager.PasswordCheck(username, pass);
+            boolean check = Main.userManager.AdminCheck(username, pass);;
             if(checkFlag&&!check) {
                 JOptionPane.showMessageDialog(null, "Login user successful!");
-//                String info = duancuahang.userManager.GetInfo(username);
+//                String info = Main.userManager.GetInfo(username);
 //                System.out.println(info);
                 User user= userManager.GetUser(username);
-                duancuahang.mainScreen = new MainScreen(user, userManager);
+                Main.mainScreen = new MainScreen(user, userManager);
                 this.dispose();
             }
             else{
             if(check) {
                 JOptionPane.showMessageDialog(null, "Login admin successful!");
-//                String info = duancuahang.userManager.GetInfo(username);
+//                String info = Main.userManager.GetInfo(username);
 //                System.out.println(info);
                 User user= userManager.GetUser(username);
-                duancuahang.mainScreenAdmin = new MainScreenAdmin(user, userManager);
+                Main.mainScreenAdmin = new MainScreenAdmin(user, userManager);
                 this.dispose();
             }
             else JOptionPane.showMessageDialog(null, "Invalid username or password!"); 

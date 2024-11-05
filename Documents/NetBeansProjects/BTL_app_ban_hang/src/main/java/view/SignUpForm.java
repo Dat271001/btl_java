@@ -1,7 +1,7 @@
 
 package view;
 
-import duancuahang1.*;
+import controller.Main;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -146,11 +146,11 @@ public class SignUpForm extends JFrame{
             if(!pass.equals(confirm)){
                 JOptionPane.showMessageDialog(this, "Password does not match!");
             } else{
-                boolean checkFlag = duancuahang.userManager.AccountCheck(username, pass);
+                boolean checkFlag = Main.userManager.AccountCheck(username, pass);
                 if(checkFlag) JOptionPane.showMessageDialog(this, "Account existed!");
                 else{
                     try {
-                        duancuahang.userManager.AddAccount(username, pass);
+                        Main.userManager.AddAccount(username, pass);
                     } catch (IOException ex) {
                     }
                     JOptionPane.showMessageDialog(this, "Sign Up successful!");

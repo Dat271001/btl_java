@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 public class UserManager {
     private HashMap<String, User> users;
-    File accountFile = new File(new File("src\\main\\java\\controller\\Accs.txt").getAbsolutePath());
+    File accountFile = new File(new File("src\\main\\java\\files\\Accs.txt").getAbsolutePath());
     
     public UserManager() throws FileNotFoundException {
         users = new HashMap<>();

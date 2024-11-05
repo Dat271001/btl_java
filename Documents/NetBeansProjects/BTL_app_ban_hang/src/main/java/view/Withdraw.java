@@ -83,7 +83,7 @@ public class Withdraw extends JFrame {
                   MainScreenAdmin.depositMenu.setText("$: " + user.getBalance());
                   
                   ArrayList<String> lines = new ArrayList<>();
-        File accountFile = new File(new File("src\\main\\java\\controller\\Accs.txt").getAbsolutePath());
+        File accountFile = new File(new File("src\\main\\java\\files\\Accs.txt").getAbsolutePath());
         try{
         Scanner sn = new Scanner(accountFile);
         while(sn.hasNextLine()){
@@ -97,7 +97,7 @@ public class Withdraw extends JFrame {
         }catch(FileNotFoundException ex){
             
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\java\\controller\\Accs.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src\\main\\java\\files\\Accs.txt"))) {
         for (String line : lines) {
             writer.write(line);
             writer.newLine();

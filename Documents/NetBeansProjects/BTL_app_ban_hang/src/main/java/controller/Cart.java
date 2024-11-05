@@ -79,7 +79,7 @@ public class Cart {
             purchaseHistories.add(purchaseHistory); // Thêm vào danh sách lịch sử mua hàng
             for (Product product : products) {
                 totalRevenue += product.getPrice() * product.getQuantity(); 
-                updateStatistics("src\\main\\java\\gui\\Statistics.txt",product.getName(),product.getQuantity(),product.getPrice(),product.getSize(),product.getImagePath(),product.getStock());
+                updateStatistics("src\\main\\java\\files\\Statistics.txt",product.getName(),product.getQuantity(),product.getPrice(),product.getSize(),product.getImagePath(),product.getStock());
             }
             clear(); // Xóa giỏ hàng sau khi thanh toán
             JOptionPane.showMessageDialog(null, "Payment successful!", "Notification", JOptionPane.INFORMATION_MESSAGE);
@@ -134,7 +134,7 @@ public class Cart {
         ArrayList<String> lines = new ArrayList<>();
         String s = name;
         boolean check=false;
-        File accountFile = new File(new File("src\\main\\java\\gui\\Statistics.txt").getAbsolutePath());
+        File accountFile = new File(new File("src\\main\\java\\files\\Statistics.txt").getAbsolutePath());
         try{
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){

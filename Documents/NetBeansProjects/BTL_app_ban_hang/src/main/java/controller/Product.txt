@@ -1,6 +1,0 @@
-
-T-shirt 19.0 2 XL 2 D:\GitPushTest\Clone\btl_java\Documents\NetBeansProjects\BTL_app_ban_hang\src\main\java\img\shirt1.jpg
-Jeans 39.0 1 XL 1 D:\GitPushTest\Clone\btl_java\Documents\NetBeansProjects\BTL_app_ban_hang\src\main\java\img\longpant1.jpg
-Sneakers 59.0 17 XL 17 D:\GitPushTest\Clone\btl_java\Documents\NetBeansProjects\BTL_app_ban_hang\src\main\java\img\sneaker1.jpg
-Tất 1.0 15 XL 15 D:\GitPushTest\Clone\btl_java\Documents\NetBeansProjects\BTL_app_ban_hang\src\main\java\img\short1.jpg
-Ao_Phong 32.0 26 XL 26 D:\GitPushTest\Clone\btl_java\Documents\NetBeansProjects\BTL_app_ban_hang\src\main\java\img\sneaker2.jpg

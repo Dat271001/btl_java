@@ -3,12 +3,12 @@ package view;
 import controller.Cart;
 import controller.ProductManager;
 import controller.UserManager;
-import duancuahang1.duancuahang;
+import controller.Main;
 import model.Product;
 import model.User;
 import model.PurchaseHistory;
 
-import static duancuahang1.duancuahang.userManager;
+import static controller.Main.userManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -372,14 +372,14 @@ public class MainScreen extends javax.swing.JFrame {
                     cart.checkout();  // Cập nhật lịch sử mua hàng
                     JOptionPane.showMessageDialog(null, "Checkout successful! Total: $" + totalAmount);
                     depositMenu.setText("$: " + user.getBalance());  // Cập nhật số dư
-                    updateBalanceToFile(user.getUsername(), user.getPassword(), user.getBalance(), "src\\main\\java\\controller\\Accs.txt", totalAmount);
+                    updateBalanceToFile(user.getUsername(), user.getPassword(), user.getBalance(), "src\\main\\java\\files\\Accs.txt", totalAmount);
                 
                     for (Product product : products) {
-                        updateProduct("src\\main\\java\\gui\\Product.txt", product.getQuantity() - product.getQuantity_Sold(), product.getName());
+                        updateProduct("src\\main\\java\\files\\Product.txt", product.getQuantity() - product.getQuantity_Sold(), product.getName());
                     }
                 
                     products = new ArrayList<>();
-                    File accountFile = new File(new File("src\\main\\java\\view\\Product.txt").getAbsolutePath());
+                    File accountFile = new File(new File("src\\main\\java\\files\\Product.txt").getAbsolutePath());
                     try {
                         Scanner sc = new Scanner(accountFile);
                         while (sc.hasNextLine()) {
@@ -412,7 +412,7 @@ public class MainScreen extends javax.swing.JFrame {
         logoutButton.addActionListener(e->{
             System.out.println("LOGOUT");
             this.dispose();
-            duancuahang.login = new LoginForm();
+            Main.login = new LoginForm();
             
         });
 
@@ -453,7 +453,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void updateProduct(String fileName,int quantity,String name){
         ArrayList<String> lines = new ArrayList<>();
         String s = name;
-        File accountFile = new File(new File("src\\main\\java\\view\\Product.txt").getAbsolutePath());
+        File accountFile = new File(new File("src\\main\\java\\files\\Product.txt").getAbsolutePath());
         try{
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){
@@ -480,7 +480,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void updateBalanceToFile(String name,String pass,double newBalance, String fileName,double total) {
         ArrayList<String> lines = new ArrayList<>();
         String s = name +" "+pass;
-        File accountFile = new File(new File("src\\main\\java\\controller\\Accs.txt").getAbsolutePath());
+        File accountFile = new File(new File("src\\main\\java\\files\\Accs.txt").getAbsolutePath());
         try{
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){
@@ -551,7 +551,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private ArrayList<Product> createProductList() {
         ArrayList<Product> productList = new ArrayList<>();
-        File accountFile = new File(new File("src\\main\\java\\view\\Product.txt").getAbsolutePath());
+        File accountFile = new File(new File("src\\main\\java\\files\\Product.txt").getAbsolutePath());
         try{
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){

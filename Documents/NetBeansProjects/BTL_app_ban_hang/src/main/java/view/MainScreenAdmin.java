@@ -3,12 +3,12 @@ package view;
 import controller.Cart;
 import controller.ProductManager;
 import controller.UserManager;
-import duancuahang1.duancuahang;
+import controller.Main;
 import model.Product;
 import model.*;
 import model.PurchaseHistory;
 
-import static duancuahang1.duancuahang.userManager;
+import static controller.Main.userManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -279,7 +279,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
 
         HistoryItem.addActionListener(e -> {
            
-           File accountFile = new File(new File("src\\main\\java\\view\\Statistics.txt").getAbsolutePath());
+           File accountFile = new File(new File("src\\main\\java\\files\\Statistics.txt").getAbsolutePath());
            try{
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){
@@ -332,7 +332,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
             double price = Double.parseDouble(JOptionPane.showInputDialog("Enter price:"));
             int stock = Integer.parseInt(JOptionPane.showInputDialog("Enter stock:"));
             String imagePath = JOptionPane.showInputDialog("Enter image path:");
-            try (PrintWriter printWriter = new PrintWriter(new FileWriter("src\\main\\java\\view\\Product.txt", true))) {
+            try (PrintWriter printWriter = new PrintWriter(new FileWriter("src\\main\\java\\files\\Product.txt", true))) {
                  String s = productName+" "+Double.toString(price)+" "+ Integer.toString(quantity)+" "+ size +" "+ Integer.toString(stock)+" "+ imagePath;
                  printWriter.println(s);
             }catch(IOException ex){
@@ -370,7 +370,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
             
             //Ghi de file
             try {
-                File dataFile = new File( new File("src\\main\\java\\view\\Product.txt").getAbsolutePath());
+                File dataFile = new File( new File("src\\main\\java\\files\\Product.txt").getAbsolutePath());
                 FileWriter writer = new FileWriter(dataFile);
                 
                 for (Product product : products){
@@ -428,7 +428,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
         logoutButton.addActionListener(e->{
             System.out.println("LOGOUT");
             this.dispose();
-            duancuahang.login = new LoginForm();
+            Main.login = new LoginForm();
             
         });
         
@@ -481,7 +481,7 @@ public class MainScreenAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private ArrayList<Product> createProductList() {
         ArrayList<Product> productList = new ArrayList<>();
-        File accountFile = new File(new File("src\\main\\java\\view\\Product.txt").getAbsolutePath());
+        File accountFile = new File(new File("src\\main\\java\\files\\Product.txt").getAbsolutePath());
         try{
             Scanner sc = new Scanner(accountFile);
             while(sc.hasNextLine()){
